@@ -21,6 +21,16 @@ val ErrorLight = Color(0xFFB00020)
 val ErrorDark = Color(0xFFCF6679)
 
 
+val Colors.loginRegisterScreenBackgroundColor: Color
+  @Composable
+  get() = if (isLight) DarkBlue else Color.Black
+
+
+val Colors.uglLogoColor: Color
+  @Composable
+  get() = if (isLight) Color.White else DefaultBlue
+
+
 val Colors.topAppBarContentColor: Color
   @Composable
   get() = if (isLight) Color.White else LightGray
