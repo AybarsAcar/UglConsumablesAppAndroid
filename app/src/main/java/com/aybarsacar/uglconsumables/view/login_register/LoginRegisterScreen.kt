@@ -1,14 +1,8 @@
 package com.aybarsacar.uglconsumables.view.login_register
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,10 +24,14 @@ import com.aybarsacar.uglconsumables.R
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.ui.theme.loginRegisterScreenBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.uglLogoColor
-import com.aybarsacar.uglconsumables.util.Constants
 import com.aybarsacar.uglconsumables.view.login_register.components.LoginCard
 import com.aybarsacar.uglconsumables.view.login_register.components.RegisterCard
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
+
+private enum class SelectedCard {
+  LoginCard, RegisterCard
+}
 
 
 @ExperimentalAnimationApi
@@ -45,11 +43,13 @@ fun LoginRegisterScreen(
 
   // hide the system bars for the login screen
   val systemUiController = rememberSystemUiController()
-  systemUiController.isStatusBarVisible = false
-  systemUiController.isSystemBarsVisible = false
+  SideEffect {
+    systemUiController.isStatusBarVisible = false
+    systemUiController.isSystemBarsVisible = false
+  }
 
   // show screen
-  var isLoginScreenVisible by remember { mutableStateOf(true) }
+  var selectedCard by remember { mutableStateOf(SelectedCard.LoginCard) }
 
   Box(
     modifier = Modifier.background(MaterialTheme.colors.loginRegisterScreenBackgroundColor)
@@ -62,69 +62,37 @@ fun LoginRegisterScreen(
       Image(
         modifier = Modifier
           .weight(1f)
-          .size(200.dp)
-          .clickable {
-            isLoginScreenVisible = !isLoginScreenVisible
-          },
+          .size(200.dp),
         painter = painterResource(id = R.drawable.logo),
         contentDescription = "Logo",
         colorFilter = ColorFilter.tint(MaterialTheme.colors.uglLogoColor)
       )
 
+      when (selectedCard) {
 
-      AnimatedVisibility(
-        modifier = Modifier.weight(2f),
-        visible = isLoginScreenVisible,
-        enter = slideInVertically(
-          initialOffsetY = { it }, // it == fullWidth
-          animationSpec = tween(
-            durationMillis = Constants.ANIMATION_DURATION_IN_MILLIS,
-            easing = LinearEasing // interpolator
+        SelectedCard.LoginCard -> {
+          LoginCard(
+            modifier = Modifier
+              .weight(2f)
+              .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
+              .background(MaterialTheme.colors.surface),
+            navController = navController,
+            viewModel = viewModel,
+            swapCard = { selectedCard = SelectedCard.RegisterCard }
           )
-        ),
-        exit = slideOutVertically(
-          targetOffsetY = { it },
-          animationSpec = tween(
-            durationMillis = Constants.ANIMATION_DURATION_IN_MILLIS,
-            easing = LinearEasing
-          )
-        )
-      ) {
-        LoginCard(
-          modifier = Modifier
-            .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
-            .background(MaterialTheme.colors.surface),
-          navController = navController,
-          viewModel = viewModel
-        )
-      }
+        }
 
-
-      AnimatedVisibility(
-        modifier = Modifier.weight(2f),
-        visible = !isLoginScreenVisible,
-        enter = slideInVertically(
-          initialOffsetY = { it }, // it == fullWidth
-          animationSpec = tween(
-            durationMillis = Constants.ANIMATION_DURATION_IN_MILLIS,
-            easing = LinearEasing, // interpolator
+        SelectedCard.RegisterCard -> {
+          RegisterCard(
+            modifier = Modifier
+              .weight(2f)
+              .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
+              .background(MaterialTheme.colors.surface),
+            navController = navController,
+            viewModel = viewModel,
+            swapCard = { selectedCard = SelectedCard.LoginCard }
           )
-        ),
-        exit = slideOutVertically(
-          targetOffsetY = { it },
-          animationSpec = tween(
-            durationMillis = Constants.ANIMATION_DURATION_IN_MILLIS,
-            easing = LinearEasing
-          )
-        )
-      ) {
-        RegisterCard(
-          modifier = Modifier
-            .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
-            .background(MaterialTheme.colors.surface),
-          navController = navController,
-          viewModel = viewModel
-        )
+        }
       }
     }
   }
@@ -137,5 +105,4 @@ fun ScreenPreview() {
 
   UglConsumablesTheme {
   }
-
 }

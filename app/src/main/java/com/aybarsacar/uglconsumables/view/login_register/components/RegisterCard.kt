@@ -29,7 +29,8 @@ import androidx.navigation.NavController
 fun RegisterCard(
   modifier: Modifier = Modifier,
   viewModel: ViewModel,
-  navController: NavController
+  navController: NavController,
+  swapCard: () -> Unit
 ) {
 
   // form state
@@ -160,7 +161,7 @@ fun RegisterCard(
         ) {
           Text(text = "Already have an account?", color = Color.Gray)
 
-          TextButton(onClick = { /*TODO*/ }) {
+          TextButton(onClick = { swapCard() }) {
             Text(
               text = "Login",
               style = TextStyle(textDecoration = TextDecoration.Underline, fontWeight = FontWeight.Bold)

@@ -24,7 +24,10 @@ class MainActivity : ComponentActivity() {
 
         val navController = rememberNavController()
 
-        NavHost(navController = navController, startDestination = Screen.LoginRegisterScreen.route) {
+        NavHost(
+          navController = navController,
+          startDestination = if (true/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
+        ) {
 
           composable(
             route = Screen.LoginRegisterScreen.route
@@ -32,6 +35,11 @@ class MainActivity : ComponentActivity() {
             LoginRegisterScreen(navController = navController)
           }
 
+          composable(
+            route = Screen.HomeScreen.route
+          ){
+
+          }
         }
       }
     }

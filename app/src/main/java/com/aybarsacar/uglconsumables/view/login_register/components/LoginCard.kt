@@ -28,7 +28,8 @@ import androidx.navigation.NavController
 fun LoginCard(
   modifier: Modifier = Modifier,
   viewModel: ViewModel,
-  navController: NavController
+  navController: NavController,
+  swapCard: () -> Unit
 ) {
 
   // form state
@@ -123,7 +124,7 @@ fun LoginCard(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.SpaceBetween
         ) {
-          TextButton(onClick = { /*TODO*/ }) {
+          TextButton(onClick = { swapCard() }) {
             Text(text = "Sign Up")
           }
 
