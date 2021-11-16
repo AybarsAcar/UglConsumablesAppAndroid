@@ -1,10 +1,10 @@
 package com.aybarsacar.uglconsumables.view.login_register
 
-import com.aybarsacar.uglconsumables.data.remote.dto.UserDto
+import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
 
 
 class LoginRegisterState {
   val isLoading: Boolean = false
-  val user: UserDto? = null
+  val account: AccountDto? = null
   val error: String = ""
 }

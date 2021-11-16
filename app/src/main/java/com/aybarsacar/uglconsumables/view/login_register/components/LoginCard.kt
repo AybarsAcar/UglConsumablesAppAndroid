@@ -2,6 +2,7 @@ package com.aybarsacar.uglconsumables.view.login_register.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -20,14 +21,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
+import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterViewModel
 
 
 @Composable
 fun LoginCard(
   modifier: Modifier = Modifier,
-  viewModel: ViewModel,
+  viewModel: LoginRegisterViewModel = hiltViewModel(),
   navController: NavController,
   swapCard: () -> Unit
 ) {
@@ -84,7 +87,8 @@ fun LoginCard(
               }
             }
           },
-          singleLine = true
+          singleLine = true,
+          keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -93,7 +97,7 @@ fun LoginCard(
           modifier = Modifier.fillMaxWidth(),
           value = password,
           onValueChange = { password = it },
-          keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+          keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Send),
           visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
           label = { Text(text = "Password") },
           singleLine = true,
@@ -105,12 +109,17 @@ fun LoginCard(
               )
             }
           },
+          keyboardActions = KeyboardActions {
+            viewModel.login(LoginAccountDetails(email, password))
+          }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-          onClick = { /*TODO*/ },
+          onClick = {
+            viewModel.login(LoginAccountDetails(email, password))
+          },
           modifier = Modifier.fillMaxWidth(),
           shape = RoundedCornerShape(16.dp),
           enabled = isFormValid

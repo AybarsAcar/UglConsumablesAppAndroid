@@ -26,7 +26,6 @@ import com.aybarsacar.uglconsumables.ui.theme.loginRegisterScreenBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.uglLogoColor
 import com.aybarsacar.uglconsumables.view.login_register.components.LoginCard
 import com.aybarsacar.uglconsumables.view.login_register.components.RegisterCard
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private enum class SelectedCard {
@@ -42,11 +41,11 @@ fun LoginRegisterScreen(
 ) {
 
   // hide the system bars for the login screen
-  val systemUiController = rememberSystemUiController()
+  /*val systemUiController = rememberSystemUiController()
   SideEffect {
     systemUiController.isStatusBarVisible = false
     systemUiController.isSystemBarsVisible = false
-  }
+  }*/
 
   // show screen
   var selectedCard by remember { mutableStateOf(SelectedCard.LoginCard) }
@@ -77,7 +76,6 @@ fun LoginRegisterScreen(
               .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
               .background(MaterialTheme.colors.surface),
             navController = navController,
-            viewModel = viewModel,
             swapCard = { selectedCard = SelectedCard.RegisterCard }
           )
         }
