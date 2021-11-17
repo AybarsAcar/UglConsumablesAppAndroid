@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName
  * user object retrieved from the UGL API
  */
 data class AccountDto(
-  @SerializedName("username") val username: String,
-  @SerializedName("email") val email: String,
-  @SerializedName("token") var token: String,
-  @SerializedName("department") val department: String
+  @SerializedName("username") val username: String = "",
+  @SerializedName("email") val email: String = "",
+  @SerializedName("token") var token: String = "",
+  @SerializedName("department") val department: String = ""
 )
 
 

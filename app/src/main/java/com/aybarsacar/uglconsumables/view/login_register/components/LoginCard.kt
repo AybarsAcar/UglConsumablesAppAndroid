@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
+import com.aybarsacar.uglconsumables.view.Screen
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterViewModel
 
 
@@ -35,6 +36,8 @@ fun LoginCard(
   swapCard: () -> Unit
 ) {
 
+  val loginState = viewModel.state.value
+
   // form state
   var email by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
@@ -44,6 +47,14 @@ fun LoginCard(
   val isFormValid by derivedStateOf {
     email.isNotBlank() && password.length >= 8
   }
+
+
+  loginState.account?.let {
+    if (it.token.isNotEmpty()) {
+      navController.navigate(Screen.HomeScreen.route)
+    }
+  }
+
 
   Card(
     modifier = modifier
@@ -122,7 +133,7 @@ fun LoginCard(
           },
           modifier = Modifier.fillMaxWidth(),
           shape = RoundedCornerShape(16.dp),
-          enabled = isFormValid
+          enabled = isFormValid && !loginState.isLoading
         ) {
           Text(text = "Login")
         }

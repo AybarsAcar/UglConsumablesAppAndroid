@@ -9,8 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
+import com.aybarsacar.uglconsumables.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -19,9 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginRegisterViewModel @Inject constructor(private val _userRepository: UserRepository) : ViewModel() {
 
-
-  var account by mutableStateOf(AccountDto("", "", "", ""))
-
+  private var _token by mutableStateOf("")
 
   private val _state = mutableStateOf(LoginRegisterState())
   val state: State<LoginRegisterState> = _state
@@ -29,50 +30,51 @@ class LoginRegisterViewModel @Inject constructor(private val _userRepository: Us
 
   fun login(loginAccountDetails: LoginAccountDetails) {
 
-    viewModelScope.launch {
+    loginFlow(loginAccountDetails).onEach { result ->
 
-      try {
-        val response = _userRepository.login(loginAccountDetails)
+      when (result) {
+        is Resource.Success -> {
 
-        account = response
+          _state.value = LoginRegisterState(account = result.data)
 
-      } catch (e: HttpException) {
+          result.data?.let { _token = it.token }
+        }
 
-        println(e.localizedMessage)
+        is Resource.Loading -> {
+          _state.value = LoginRegisterState(isLoading = true)
+        }
 
-      } catch (e: IOException) {
+        is Resource.Error -> {
+          val message = result.message ?: "An unexpected error occurred"
 
-        println("Unexpected error occurred")
-
+          _state.value = LoginRegisterState(error = message)
+        }
       }
 
-
-    }
+    }.launchIn(viewModelScope)
 
   }
 
 
-//  fun login(loginAccountDetails: LoginAccountDetails): Flow<Resource<AccountDto>> = flow {
-//    println("EXECUTED")
-//    try {
-//
-//      emit(Resource.Loading<AccountDto>())
-//
-//      // execute the request
-//      val accountDto = _userRepository.login(loginAccountDetails)
-//
-//
-//      // TODO: store the token in user prefs local database so the logged in state is persisted between sessions
-//
-//      emit(Resource.Success<AccountDto>(accountDto))
-//
-//
-//    } catch (e: HttpException) {
-//      // response code that does not start with 2
-//      emit(Resource.Error<AccountDto>(e.localizedMessage ?: "An unexpected error occurred"))
-//    } catch (e: IOException) {
-//      // i.e. the user doesn't have internet permit connection, or server is offline
-//      emit(Resource.Error<AccountDto>("Could not reach server. Check your internet connection"))
-//    }
-//  }
+  private fun loginFlow(loginAccountDetails: LoginAccountDetails) = flow {
+
+    try {
+
+      emit(Resource.Loading<AccountDto>())
+
+      val response = _userRepository.login(loginAccountDetails)
+
+      emit(Resource.Success<AccountDto>(response))
+
+    } catch (e: HttpException) {
+
+      emit(Resource.Error<AccountDto>(e.localizedMessage ?: "An unexpected error occurred"))
+
+    } catch (e: IOException) {
+
+      emit(Resource.Error<AccountDto>("Could not reach server. Check your internet connection"))
+    }
+  }
 }
+
+

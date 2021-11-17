@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import com.aybarsacar.uglconsumables.R
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.ui.theme.loginRegisterScreenBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.uglLogoColor
+import com.aybarsacar.uglconsumables.util.Resource
 import com.aybarsacar.uglconsumables.view.login_register.components.LoginCard
 import com.aybarsacar.uglconsumables.view.login_register.components.RegisterCard
 
@@ -46,6 +48,7 @@ fun LoginRegisterScreen(
     systemUiController.isStatusBarVisible = false
     systemUiController.isSystemBarsVisible = false
   }*/
+
 
   // show screen
   var selectedCard by remember { mutableStateOf(SelectedCard.LoginCard) }

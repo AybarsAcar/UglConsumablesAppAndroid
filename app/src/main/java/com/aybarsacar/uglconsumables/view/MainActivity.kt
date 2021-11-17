@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
+import com.aybarsacar.uglconsumables.view.home.HomeScreen
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,8 +38,8 @@ class MainActivity : ComponentActivity() {
 
           composable(
             route = Screen.HomeScreen.route
-          ){
-
+          ) {
+            HomeScreen()
           }
         }
       }
