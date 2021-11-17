@@ -25,9 +25,9 @@ import com.aybarsacar.uglconsumables.R
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.ui.theme.loginRegisterScreenBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.uglLogoColor
-import com.aybarsacar.uglconsumables.util.Resource
 import com.aybarsacar.uglconsumables.view.login_register.components.LoginCard
 import com.aybarsacar.uglconsumables.view.login_register.components.RegisterCard
+import kotlinx.coroutines.launch
 
 
 private enum class SelectedCard {
@@ -49,9 +49,27 @@ fun LoginRegisterScreen(
     systemUiController.isSystemBarsVisible = false
   }*/
 
+  val scope = rememberCoroutineScope()
+  val scaffoldState = rememberScaffoldState()
+  val loginRegisterState by remember { viewModel.state }
+
+  LaunchedEffect(key1 = loginRegisterState) {
+
+    if (loginRegisterState.error.isNotEmpty()) {
+
+      scope.launch {
+        scaffoldState.snackbarHostState.showSnackbar(
+          message = loginRegisterState.error,
+          actionLabel = "Ok"
+        )
+      }
+    }
+  }
+
 
   // show screen
   var selectedCard by remember { mutableStateOf(SelectedCard.LoginCard) }
+
 
   Box(
     modifier = Modifier.background(MaterialTheme.colors.loginRegisterScreenBackgroundColor)
