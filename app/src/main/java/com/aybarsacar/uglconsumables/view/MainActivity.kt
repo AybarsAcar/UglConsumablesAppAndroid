@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -14,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @ExperimentalAnimationApi
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
         NavHost(
           navController = navController,
-          startDestination = if (false/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
+          startDestination = if (true/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
         ) {
 
           composable(
