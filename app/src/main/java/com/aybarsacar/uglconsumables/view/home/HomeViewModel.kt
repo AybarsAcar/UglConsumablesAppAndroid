@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aybarsacar.uglconsumables.domain.use_case.GetConsumablesUseCase
+import com.aybarsacar.uglconsumables.domain.repository.ConsumableRepository
 import com.aybarsacar.uglconsumables.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val _getConsumablesUseCase: GetConsumablesUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(private val _consumableRepository: ConsumableRepository) : ViewModel() {
 
   private val _state = mutableStateOf(HomeState())
   val state: State<HomeState> = _state
@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(private val _getConsumablesUseCase: GetC
 
   private fun getConsumables() {
 
-    _getConsumablesUseCase().onEach {
+    _consumableRepository.getConsumables().onEach {
 
       when (it) {
 
