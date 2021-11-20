@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aybarsacar.uglconsumables.ui.theme.fabBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.fabIconColor
+import com.aybarsacar.uglconsumables.view.home.components.BottomHomeBar
 import com.aybarsacar.uglconsumables.view.home.components.ConsumableItem
 import com.aybarsacar.uglconsumables.view.home.components.HomeAppBar
 
@@ -34,6 +35,9 @@ fun HomeScreen(
     floatingActionButton = {
       CreateNewOrderFab()
     },
+    bottomBar = {
+      BottomHomeBar(navController = navController)
+    }
   ) {
     // page content here
 

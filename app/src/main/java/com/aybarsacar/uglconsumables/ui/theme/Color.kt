@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 val DefaultBlue = Color(0xFF4267B2)
 val DarkBlue = Color(0xff3d5a80)
 val LightBlue = Color(0xff98c1d9)
+val DaintreeBlue = Color(0xff01202d)
 
 val BlueGrey = Color(0xFF898F9C)
 
@@ -27,7 +28,7 @@ val Colors.loginRegisterScreenBackgroundColor: Brush
   get() = if (isLight) {
     Brush.verticalGradient(listOf(DarkBlue, LightBlue))
   } else {
-    Brush.verticalGradient(listOf(Color.Black, DarkGray))
+    Brush.verticalGradient(listOf(Color.Black, DaintreeBlue))
   }
 
 val Colors.uglLogoColor: Color

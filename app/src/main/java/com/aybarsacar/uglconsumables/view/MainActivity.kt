@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
         NavHost(
           navController = navController,
-          startDestination = if (true/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
+          startDestination = if (false/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
         ) {
 
           composable(
@@ -42,6 +45,18 @@ class MainActivity : ComponentActivity() {
             route = Screen.HomeScreen.route
           ) {
             HomeScreen(navController = navController)
+          }
+
+          composable(
+            route = Screen.ProfileScreen.route
+          ) {
+            Text(text = "Profile Screen", modifier = Modifier.fillMaxSize())
+          }
+
+          composable(
+            route = Screen.SettingsScreen.route
+          ) {
+            Text(text = "Settings Screen", modifier = Modifier.fillMaxSize())
           }
         }
       }

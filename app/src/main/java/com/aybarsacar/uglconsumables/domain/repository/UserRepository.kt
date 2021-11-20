@@ -3,6 +3,8 @@ package com.aybarsacar.uglconsumables.domain.repository
 import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
+import com.aybarsacar.uglconsumables.util.Resource
+import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -18,6 +20,6 @@ interface UserRepository {
 
   suspend fun register(registerAccountDetails: RegisterAccountDetails): AccountDto
 
-  suspend fun login(loginAccountDetails: LoginAccountDetails): AccountDto
+  fun login(loginAccountDetails: LoginAccountDetails): Flow<Resource<AccountDto>>
 
 }

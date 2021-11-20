@@ -6,16 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
 import com.aybarsacar.uglconsumables.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -30,7 +26,7 @@ class LoginRegisterViewModel @Inject constructor(private val _userRepository: Us
 
   fun login(loginAccountDetails: LoginAccountDetails) {
 
-    loginFlow(loginAccountDetails).onEach { result ->
+    _userRepository.login(loginAccountDetails).onEach { result ->
 
       when (result) {
         is Resource.Success -> {
@@ -53,27 +49,6 @@ class LoginRegisterViewModel @Inject constructor(private val _userRepository: Us
 
     }.launchIn(viewModelScope)
 
-  }
-
-
-  private fun loginFlow(loginAccountDetails: LoginAccountDetails) = flow {
-
-    try {
-
-      emit(Resource.Loading<AccountDto>())
-
-      val response = _userRepository.login(loginAccountDetails)
-
-      emit(Resource.Success<AccountDto>(response))
-
-    } catch (e: HttpException) {
-
-      emit(Resource.Error<AccountDto>(e.localizedMessage ?: "An unexpected error occurred"))
-
-    } catch (e: IOException) {
-
-      emit(Resource.Error<AccountDto>("Could not reach server. Check your internet connection"))
-    }
   }
 }
 
