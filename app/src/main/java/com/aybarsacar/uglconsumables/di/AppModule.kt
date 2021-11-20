@@ -1,7 +1,9 @@
 package com.aybarsacar.uglconsumables.di
 
-import com.aybarsacar.uglconsumables.data.remote.UserApi
+import com.aybarsacar.uglconsumables.data.remote.UglConsumablesAppApi
+import com.aybarsacar.uglconsumables.data.repository.ConsumableRepositoryImpl
 import com.aybarsacar.uglconsumables.data.repository.UserRepositoryImpl
+import com.aybarsacar.uglconsumables.domain.repository.ConsumableRepository
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
 import com.aybarsacar.uglconsumables.util.Constants
 import dagger.Module
@@ -23,18 +25,24 @@ object AppModule {
 
   @Provides
   @Singleton
-  fun provideUsersApi(): UserApi {
+  fun provideUsersApi(): UglConsumablesAppApi {
     return Retrofit.Builder()
       .baseUrl(Constants.BASE_URL)
       .addConverterFactory(GsonConverterFactory.create())
       .build()
-      .create(UserApi::class.java)
+      .create(UglConsumablesAppApi::class.java)
   }
 
 
   @Provides
   @Singleton
-  fun provideUserRepository(api: UserApi): UserRepository {
+  fun provideUserRepository(api: UglConsumablesAppApi): UserRepository {
     return UserRepositoryImpl(api)
+  }
+
+  @Provides
+  @Singleton
+  fun provideConsumableRepository(api: UglConsumablesAppApi): ConsumableRepository {
+    return ConsumableRepositoryImpl(api)
   }
 }

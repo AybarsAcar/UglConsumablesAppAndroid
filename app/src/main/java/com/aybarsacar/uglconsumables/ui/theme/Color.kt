@@ -2,6 +2,7 @@ package com.aybarsacar.uglconsumables.ui.theme
 
 import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 
@@ -21,10 +22,13 @@ val ErrorLight = Color(0xFFB00020)
 val ErrorDark = Color(0xFFCF6679)
 
 
-val Colors.loginRegisterScreenBackgroundColor: Color
+val Colors.loginRegisterScreenBackgroundColor: Brush
   @Composable
-  get() = if (isLight) DarkBlue else Color.Black
-
+  get() = if (isLight) {
+    Brush.verticalGradient(listOf(DarkBlue, LightBlue))
+  } else {
+    Brush.verticalGradient(listOf(Color.Black, DarkGray))
+  }
 
 val Colors.uglLogoColor: Color
   @Composable

@@ -1,18 +1,16 @@
 package com.aybarsacar.uglconsumables.data.remote
 
 import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
+import com.aybarsacar.uglconsumables.data.remote.dto.ConsumableDto
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 
 /**
  * API calls to the server for the user
  */
-interface UserApi {
+interface UglConsumablesAppApi {
 
   @GET("User")
   suspend fun getUsers(): List<AccountDto>
@@ -35,4 +33,7 @@ interface UserApi {
   @POST("Account/login")
   suspend fun login(@Body loginAccountDetails: LoginAccountDetails): AccountDto
 
+
+  @GET("Consumable")
+  suspend fun getConsumables(@Query("serviceOrderId") serviceOrderId: Int? = null): List<ConsumableDto>
 }

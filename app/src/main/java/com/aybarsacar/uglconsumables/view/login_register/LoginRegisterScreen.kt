@@ -3,12 +3,8 @@ package com.aybarsacar.uglconsumables.view.login_register
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -94,7 +90,8 @@ fun LoginRegisterScreen(
           LoginCard(
             modifier = Modifier
               .weight(2f)
-              .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
+              .padding(8.dp)
+              .clip(shape = RoundedCornerShape(32.dp))
               .background(MaterialTheme.colors.surface),
             navController = navController,
             swapCard = { selectedCard = SelectedCard.RegisterCard }
@@ -105,7 +102,8 @@ fun LoginRegisterScreen(
           RegisterCard(
             modifier = Modifier
               .weight(2f)
-              .clip(shape = RoundedCornerShape(32.dp).copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize))
+              .padding(8.dp)
+              .clip(shape = RoundedCornerShape(32.dp))
               .background(MaterialTheme.colors.surface),
             navController = navController,
             viewModel = viewModel,

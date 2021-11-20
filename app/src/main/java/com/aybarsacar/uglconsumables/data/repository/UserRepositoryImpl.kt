@@ -1,6 +1,6 @@
 package com.aybarsacar.uglconsumables.data.repository
 
-import com.aybarsacar.uglconsumables.data.remote.UserApi
+import com.aybarsacar.uglconsumables.data.remote.UglConsumablesAppApi
 import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * implementation class of the UserRepository
  */
-class UserRepositoryImpl @Inject constructor(private val _api: UserApi) : UserRepository {
+class UserRepositoryImpl @Inject constructor(private val _api: UglConsumablesAppApi) : UserRepository {
 
   override suspend fun getUsers(): List<AccountDto> {
     return _api.getUsers()

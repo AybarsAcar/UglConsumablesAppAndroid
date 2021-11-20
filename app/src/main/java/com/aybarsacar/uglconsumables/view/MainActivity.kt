@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         NavHost(
           navController = navController,
-          startDestination = if (true/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
+          startDestination = if (false/*TODO - add auth logic*/) Screen.LoginRegisterScreen.route else Screen.HomeScreen.route
         ) {
 
           composable(
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
           composable(
             route = Screen.HomeScreen.route
           ) {
-            HomeScreen()
+            HomeScreen(navController = navController)
           }
         }
       }
