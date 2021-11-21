@@ -8,7 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,6 +18,7 @@ import com.aybarsacar.uglconsumables.ui.theme.fabIconColor
 import com.aybarsacar.uglconsumables.view.home.components.BottomHomeBar
 import com.aybarsacar.uglconsumables.view.home.components.HomeAppBar
 import com.aybarsacar.uglconsumables.view.home.home_screen.HomeScreen
+import com.aybarsacar.uglconsumables.view.home.profile_screen.ProfileScreen
 
 
 @ExperimentalMaterialApi
@@ -62,7 +62,7 @@ fun Home(
         }
 
         composable(route = NavigationItem.ProfileScreen.route) {
-          Text(text = "Profile Screen")
+          ProfileScreen()
         }
 
         composable(route = NavigationItem.OrdersScreen.route) {

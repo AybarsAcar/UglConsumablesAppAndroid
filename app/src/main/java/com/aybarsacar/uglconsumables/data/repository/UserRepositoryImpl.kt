@@ -42,7 +42,10 @@ class UserRepositoryImpl @Inject constructor(private val _api: UglConsumablesApp
 
       val response = _api.login(loginAccountDetails)
 
+      // TODO cache the currently logged in user
+
       emit(Resource.Success<AccountDto>(response))
+
 
     } catch (e: HttpException) {
 

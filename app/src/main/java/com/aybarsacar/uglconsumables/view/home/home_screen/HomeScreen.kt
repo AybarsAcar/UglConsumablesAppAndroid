@@ -1,6 +1,7 @@
 package com.aybarsacar.uglconsumables.view.home.home_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.aybarsacar.uglconsumables.view.home.HomeViewModel
 import com.aybarsacar.uglconsumables.view.home.components.AreaOfWorkItem
 import com.aybarsacar.uglconsumables.view.home.components.EmptyContent
+import com.aybarsacar.uglconsumables.view.home.components.Shimmer
 
 
 @ExperimentalMaterialApi
@@ -29,6 +31,16 @@ fun HomeScreen(
         .fillMaxSize()
         .background(MaterialTheme.colors.background)
     )
+  }
+
+  if (state.isLoading) {
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(2.dp)
+    ) {
+      Shimmer()
+    }
   }
 
   LazyColumn(
