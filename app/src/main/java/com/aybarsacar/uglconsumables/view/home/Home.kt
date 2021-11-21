@@ -15,12 +15,15 @@ import com.aybarsacar.uglconsumables.navigation.NavigationItem
 import com.aybarsacar.uglconsumables.navigation.Router
 import com.aybarsacar.uglconsumables.ui.theme.fabBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.fabIconColor
+import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.components.BottomHomeBar
 import com.aybarsacar.uglconsumables.view.home.components.HomeAppBar
 import com.aybarsacar.uglconsumables.view.home.home_screen.HomeScreen
 import com.aybarsacar.uglconsumables.view.home.profile_screen.ProfileScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun Home(
@@ -70,7 +73,8 @@ fun Home(
         }
 
         composable(route = NavigationItem.SettingsScreen.route) {
-          Text(text = "Settings Screen")
+//          Text(text = "Settings Screen")
+          CreateEditPage()
         }
       }
     }

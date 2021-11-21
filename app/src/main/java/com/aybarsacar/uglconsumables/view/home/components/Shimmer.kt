@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -50,8 +52,9 @@ fun ShimmerGridItem(brush: Brush) {
   Spacer(
     modifier = Modifier
       .fillMaxWidth()
-      .size(40.dp)
+      .size(50.dp)
       .background(brush = brush)
+      .clip(RoundedCornerShape(2.dp))
   )
 }
 

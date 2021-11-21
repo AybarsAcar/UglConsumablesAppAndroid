@@ -13,11 +13,13 @@ import com.aybarsacar.uglconsumables.navigation.createRouter
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.view.home.Home
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
+@ExperimentalPagerApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,10 @@ class MainActivity : ComponentActivity() {
                 navController.navigate(route)
               }
             )
+          }
+
+          composable(route = Screen.CreateEdit.route) {
+
           }
         }
       }
