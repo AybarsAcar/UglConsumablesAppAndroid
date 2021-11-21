@@ -1,55 +1,67 @@
 package com.aybarsacar.uglconsumables.view.home.components
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.aybarsacar.uglconsumables.view.Screen
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.aybarsacar.uglconsumables.navigation.NavigationItem
+import com.aybarsacar.uglconsumables.navigation.currentRoute
+import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 
 
 @Composable
 fun BottomHomeBar(
-  navController: NavController
+  navHostController: NavHostController,
+  tabs: List<NavigationItem>
 ) {
 
   BottomAppBar(
     modifier = Modifier
-      .padding(2.dp)
       .graphicsLayer {
-        RoundedCornerShape(10.dp).also { shape = it }
+        RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp).also { shape = it }
         clip = true
       },
+    cutoutShape = RoundedCornerShape(50),
   ) {
 
-    val screens = listOf(
-      Screen.HomeScreen,
-      Screen.ProfileScreen,
-      Screen.SettingsScreen
-    )
+    val currentRoute = navHostController.currentRoute()
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    BottomNavigation {
 
-    BottomNavigation(
-
-    ) {
-      screens.forEach { screen ->
+      tabs.forEach { navigationItem ->
         BottomNavigationItem(
-          selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-          onClick = { navController.navigate(screen.route) },
-          icon = { Icon(imageVector = screen.icon!!, contentDescription = "Nav Icon") }
+          selected = currentRoute == navigationItem.route,
+          onClick = {
+            if (currentRoute != navigationItem.route) {
+              navHostController.navigate(navigationItem.route)
+            }
+          },
+          icon = { Icon(imageVector = navigationItem.icon, contentDescription = "Nav Icon") }
         )
       }
     }
+  }
+}
+
+
+@Preview
+@Composable
+fun BottomHomeBarPreview() {
+  BottomHomeBar(navHostController = rememberNavController(), listOf())
+}
+
+@Preview
+@Composable
+fun BottomHomeBarPreviewDark() {
+  UglConsumablesTheme(darkTheme = true) {
+    BottomHomeBar(navHostController = rememberNavController(), listOf())
   }
 }

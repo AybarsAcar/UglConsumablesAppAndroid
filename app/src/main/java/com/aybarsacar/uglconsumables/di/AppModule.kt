@@ -1,8 +1,10 @@
 package com.aybarsacar.uglconsumables.di
 
 import com.aybarsacar.uglconsumables.data.remote.UglConsumablesAppApi
+import com.aybarsacar.uglconsumables.data.repository.AreaOfWorkRepositoryImpl
 import com.aybarsacar.uglconsumables.data.repository.ConsumableRepositoryImpl
 import com.aybarsacar.uglconsumables.data.repository.UserRepositoryImpl
+import com.aybarsacar.uglconsumables.domain.repository.AreaOfWorkRepository
 import com.aybarsacar.uglconsumables.domain.repository.ConsumableRepository
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
 import com.aybarsacar.uglconsumables.util.Constants
@@ -40,9 +42,17 @@ object AppModule {
     return UserRepositoryImpl(api)
   }
 
+
   @Provides
   @Singleton
   fun provideConsumableRepository(api: UglConsumablesAppApi): ConsumableRepository {
     return ConsumableRepositoryImpl(api)
+  }
+
+
+  @Provides
+  @Singleton
+  fun provideAreaOfWorkRepository(api: UglConsumablesAppApi): AreaOfWorkRepository {
+    return AreaOfWorkRepositoryImpl(api)
   }
 }

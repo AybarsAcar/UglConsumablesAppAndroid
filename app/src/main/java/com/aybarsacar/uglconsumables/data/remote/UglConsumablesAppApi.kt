@@ -1,9 +1,6 @@
 package com.aybarsacar.uglconsumables.data.remote
 
-import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
-import com.aybarsacar.uglconsumables.data.remote.dto.ConsumableDto
-import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
-import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
+import com.aybarsacar.uglconsumables.data.remote.dto.*
 import retrofit2.http.*
 
 
@@ -36,4 +33,7 @@ interface UglConsumablesAppApi {
 
   @GET("Consumable")
   suspend fun getConsumables(@Query("serviceOrderId") serviceOrderId: Int? = null): List<ConsumableDto>
+
+  @GET("AreaOfWork")
+  suspend fun getAreaOfWorks(): List<AreaOfWorkDto>
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aybarsacar.uglconsumables.domain.repository.AreaOfWorkRepository
 import com.aybarsacar.uglconsumables.domain.repository.ConsumableRepository
 import com.aybarsacar.uglconsumables.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,13 +14,16 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val _consumableRepository: ConsumableRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(
+  private val _consumableRepository: ConsumableRepository,
+  private val _areaOfWorkRepository: AreaOfWorkRepository
+) : ViewModel() {
 
   private val _state = mutableStateOf(HomeState())
   val state: State<HomeState> = _state
 
   init {
-    getConsumables()
+    getAreaOfWorks()
   }
 
   private fun getConsumables() {
@@ -30,6 +34,27 @@ class HomeViewModel @Inject constructor(private val _consumableRepository: Consu
 
         is Resource.Success -> {
           _state.value = HomeState(consumables = it.data ?: emptyList())
+        }
+
+        is Resource.Error -> {
+          _state.value = HomeState(error = it.message)
+        }
+
+        is Resource.Loading -> {
+          _state.value = HomeState(isLoading = true)
+        }
+      }
+    }.launchIn(viewModelScope)
+  }
+
+  fun getAreaOfWorks() {
+
+    _areaOfWorkRepository.getAreaOfWorks().onEach {
+
+      when (it) {
+
+        is Resource.Success -> {
+          _state.value = HomeState(areaOfWorks = it.data ?: emptyList())
         }
 
         is Resource.Error -> {

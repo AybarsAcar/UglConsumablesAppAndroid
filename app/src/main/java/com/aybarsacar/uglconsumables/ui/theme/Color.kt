@@ -11,11 +11,15 @@ val DarkBlue = Color(0xff3d5a80)
 val LightBlue = Color(0xff98c1d9)
 val DaintreeBlue = Color(0xff01202d)
 
+val DefaultComplementary = Color(0xFFCf751f)
+
 val BlueGrey = Color(0xFF898F9C)
 
+val VeryLightGray = Color(0xFFFAFAFA)
 val LightGray = Color(0xFFFCFCFC)
 val MediumGray = Color(0xFF9C9C9C)
 val DarkGray = Color(0xFF141414)
+val SurfaceGray = Color(0xFF212121)
 
 
 // Error colors
@@ -48,7 +52,7 @@ val Colors.topAppBarBackGroundColor: Color
 
 val Colors.fabBackgroundColor: Color
   @Composable
-  get() = if (isLight) DarkBlue else LightBlue
+  get() = if (isLight) DefaultComplementary else DefaultBlue
 
 val Colors.fabIconColor: Color
   @Composable
@@ -56,7 +60,7 @@ val Colors.fabIconColor: Color
 
 val Colors.taskItemBackgroundColor: Color
   @Composable
-  get() = if (isLight) Color.White else DarkGray
+  get() = if (isLight) Color.White else SurfaceGray
 
 val Colors.taskItemTextColor: Color
   @Composable
@@ -69,3 +73,7 @@ val Colors.errorAndDeleteBackgroundColor: Color
 val Colors.splashScreenBackground: Color
   @Composable
   get() = if (isLight) DarkBlue else Color.Black
+
+val Colors.itemBorderColor: Color
+  @Composable
+  get() = if (isLight) LightGray else Color.Black

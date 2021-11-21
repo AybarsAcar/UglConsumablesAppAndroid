@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
-import com.aybarsacar.uglconsumables.view.Screen
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterViewModel
 
 
@@ -51,7 +51,7 @@ fun LoginCard(
 
   loginState.account?.let {
     if (it.token.isNotEmpty()) {
-      navController.navigate(Screen.HomeScreen.route)
+      navController.navigate(Screen.Home.route)
     }
   }
 
