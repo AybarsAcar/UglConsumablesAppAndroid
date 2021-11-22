@@ -19,9 +19,11 @@ import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.launch
 
 
+@ExperimentalPermissionsApi
 @ExperimentalPagerApi
 @Composable
 fun CreateEditPage(
@@ -103,6 +105,7 @@ fun CreateEditPage(
 }
 
 
+@ExperimentalPermissionsApi
 @ExperimentalPagerApi
 @Preview
 @Composable
@@ -110,6 +113,7 @@ fun CreateEditPagePreview() {
   CreateEditPage(navController = rememberNavController())
 }
 
+@ExperimentalPermissionsApi
 @ExperimentalPagerApi
 @Preview
 @Composable

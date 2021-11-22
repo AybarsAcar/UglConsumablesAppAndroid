@@ -19,6 +19,7 @@ import com.aybarsacar.uglconsumables.ui.theme.successBackgroundColor
 import com.aybarsacar.uglconsumables.view.create_edit.components.AddEditImage
 import com.aybarsacar.uglconsumables.view.create_edit.components.MyDropdown
 import com.aybarsacar.uglconsumables.view.create_edit.components.StorageLocationChip
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 
 enum class UnitOfMeasure(val value: String) {
@@ -26,6 +27,7 @@ enum class UnitOfMeasure(val value: String) {
 }
 
 
+@ExperimentalPermissionsApi
 @Composable
 fun CreateEditConsumableTab() {
 
@@ -138,12 +140,14 @@ fun CreateEditConsumableTab() {
 }
 
 
+@ExperimentalPermissionsApi
 @Preview
 @Composable
 fun CreateEditConsumableTabPreview() {
   CreateEditConsumableTab()
 }
 
+@ExperimentalPermissionsApi
 @Preview
 @Composable
 fun CreateEditConsumableTabPreviewDark() {

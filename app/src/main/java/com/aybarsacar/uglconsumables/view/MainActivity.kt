@@ -15,12 +15,14 @@ import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.Home
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
+@ExperimentalPermissionsApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
