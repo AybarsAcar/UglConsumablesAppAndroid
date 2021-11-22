@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.navigation.createRouter
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
+import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.Home
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -53,7 +54,7 @@ class MainActivity : ComponentActivity() {
           }
 
           composable(route = Screen.CreateEdit.route) {
-
+            CreateEditPage(navController = navController)
           }
         }
       }

@@ -19,12 +19,18 @@ val VeryLightGray = Color(0xFFFAFAFA)
 val LightGray = Color(0xFFFCFCFC)
 val MediumGray = Color(0xFF9C9C9C)
 val DarkGray = Color(0xFF141414)
+
 val SurfaceGray = Color(0xFF212121)
+val ElevatedBackgroundGray = Color(0xFF515151)
 
 
 // Error colors
 val ErrorLight = Color(0xFFB00020)
 val ErrorDark = Color(0xFFCF6679)
+
+// Success colors
+val SuccessLight = Color(0XFF77D970)
+val SuccessDark = Color(0xFF4E9F3D)
 
 
 val Colors.loginRegisterScreenBackgroundColor: Brush
@@ -44,12 +50,6 @@ val Colors.topAppBarContentColor: Color
   @Composable
   get() = if (isLight) Color.White else LightGray
 
-
-val Colors.topAppBarBackGroundColor: Color
-  @Composable
-  get() = if (isLight) DefaultBlue else Color.Black
-
-
 val Colors.fabBackgroundColor: Color
   @Composable
   get() = if (isLight) DefaultComplementary else DefaultBlue
@@ -62,6 +62,10 @@ val Colors.taskItemBackgroundColor: Color
   @Composable
   get() = if (isLight) Color.White else SurfaceGray
 
+val Colors.addEditImageBackground: Color
+  @Composable
+  get() = if (isLight) MediumGray else ElevatedBackgroundGray
+
 val Colors.taskItemTextColor: Color
   @Composable
   get() = if (isLight) DarkGray else LightGray
@@ -69,6 +73,10 @@ val Colors.taskItemTextColor: Color
 val Colors.errorAndDeleteBackgroundColor: Color
   @Composable
   get() = if (isLight) ErrorLight else ErrorDark
+
+val Colors.successBackgroundColor: Color
+  @Composable
+  get() = if (isLight) SuccessLight else SuccessDark
 
 val Colors.splashScreenBackground: Color
   @Composable

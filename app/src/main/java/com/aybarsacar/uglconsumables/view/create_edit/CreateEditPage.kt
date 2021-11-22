@@ -3,17 +3,19 @@ package com.aybarsacar.uglconsumables.view.create_edit
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Icon
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apartment
 import androidx.compose.material.icons.filled.Architecture
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -22,7 +24,9 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Composable
-fun CreateEditPage() {
+fun CreateEditPage(
+  navController: NavController
+) {
 
   val tabData = listOf(
     "Area of Work" to Icons.Default.Apartment,
@@ -39,42 +43,78 @@ fun CreateEditPage() {
   val tabIndex = pagerState.currentPage
   val coroutineScope = rememberCoroutineScope()
 
-  Column {
-    TabRow(
-      selectedTabIndex = tabIndex,
-//      indicator = { tabPositions ->
-//        TabRowDefaults.Indicator(
-//          modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
-//        )
-//      }
-    ) {
 
-      tabData.forEachIndexed { index, pair ->
-        Tab(selected = tabIndex == index, onClick = {
-          coroutineScope.launch {
-            pagerState.animateScrollToPage(index)
+  Scaffold(
+    topBar = {
+      TopAppBar(
+        navigationIcon = {
+          IconButton(onClick = { }) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
           }
-        }, text = {
-          Text(text = pair.first)
-        }, icon = {
-          Icon(imageVector = pair.second, contentDescription = null)
-        })
-      }
+        },
+        title = {
+          Text(text = "Create")
+        },
+      )
     }
-
-    HorizontalPager(
-      state = pagerState,
-      modifier = Modifier.weight(1f)
-    ) { index ->
-      Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    Column {
+      TabRow(
+        selectedTabIndex = tabIndex,
       ) {
-        Text(
-          text = tabData[index].first,
-        )
+
+        tabData.forEachIndexed { index, pair ->
+          Tab(selected = tabIndex == index, onClick = {
+            coroutineScope.launch {
+              pagerState.animateScrollToPage(index)
+            }
+          }, text = {
+            Text(text = pair.first)
+          }, icon = {
+            Icon(imageVector = pair.second, contentDescription = null)
+          })
+        }
+      }
+
+      HorizontalPager(
+        state = pagerState,
+        modifier = Modifier.weight(1f)
+      ) { index ->
+        Column(
+          modifier = Modifier.fillMaxSize(),
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+          when (tabData[index].first) {
+
+            "Area of Work" -> {
+              CreateEditAreaOfWorkTab()
+            }
+
+            "Consumable" -> {
+              CreateEditConsumableTab()
+            }
+          }
+        }
       }
     }
+  }
+}
+
+
+@ExperimentalPagerApi
+@Preview
+@Composable
+fun CreateEditPagePreview() {
+  CreateEditPage(navController = rememberNavController())
+}
+
+@ExperimentalPagerApi
+@Preview
+@Composable
+fun CreateEditPagePreviewDark() {
+  UglConsumablesTheme(darkTheme = true) {
+    CreateEditPage(navController = rememberNavController())
   }
 }

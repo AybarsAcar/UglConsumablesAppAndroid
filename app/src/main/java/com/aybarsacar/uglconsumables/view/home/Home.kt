@@ -13,9 +13,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aybarsacar.uglconsumables.navigation.NavigationItem
 import com.aybarsacar.uglconsumables.navigation.Router
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.ui.theme.fabBackgroundColor
 import com.aybarsacar.uglconsumables.ui.theme.fabIconColor
-import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.components.BottomHomeBar
 import com.aybarsacar.uglconsumables.view.home.components.HomeAppBar
 import com.aybarsacar.uglconsumables.view.home.home_screen.HomeScreen
@@ -27,7 +27,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun Home(
-  externalRouter: Router,
+  externalRouter: Router
 ) {
 
   val navController = rememberNavController()
@@ -45,7 +45,7 @@ fun Home(
       HomeAppBar()
     },
     floatingActionButton = {
-      CreateNewOrderFab()
+      CreateNewOrderFab(externalRouter = externalRouter)
     },
     isFloatingActionButtonDocked = true,
     floatingActionButtonPosition = FabPosition.Center,
@@ -73,8 +73,7 @@ fun Home(
         }
 
         composable(route = NavigationItem.SettingsScreen.route) {
-//          Text(text = "Settings Screen")
-          CreateEditPage()
+          Text(text = "Settings Screen")
         }
       }
     }
@@ -83,10 +82,12 @@ fun Home(
 
 
 @Composable
-fun CreateNewOrderFab() {
+fun CreateNewOrderFab(
+  externalRouter: Router
+) {
   FloatingActionButton(
     onClick = {
-
+      externalRouter.navigateTo(Screen.CreateEdit.route)
     },
     shape = RoundedCornerShape(50),
     backgroundColor = MaterialTheme.colors.fabBackgroundColor
