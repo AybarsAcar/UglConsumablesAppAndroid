@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.aybarsacar.uglconsumables.ui.theme.successBackgroundColor
-import com.aybarsacar.uglconsumables.view.create_edit.components.AddEditImage
-import com.aybarsacar.uglconsumables.view.create_edit.components.StorageLocationChip
 
 
 @Composable

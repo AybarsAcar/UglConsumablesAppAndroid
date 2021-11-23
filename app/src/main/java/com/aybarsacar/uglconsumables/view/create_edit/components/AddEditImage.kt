@@ -1,9 +1,6 @@
 package com.aybarsacar.uglconsumables.view.create_edit.components
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,13 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import coil.compose.rememberImagePainter
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.ui.theme.addEditImageBackground
-import com.aybarsacar.uglconsumables.util.Permission
-import com.aybarsacar.uglconsumables.util.camera.CameraPreview
+import com.aybarsacar.uglconsumables.util.Constants
+import com.aybarsacar.uglconsumables.util.camera.CameraCapture
+import com.aybarsacar.uglconsumables.util.gallery.GallerySelect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 
@@ -65,28 +64,61 @@ fun AddEditImage(modifier: Modifier = Modifier) {
 @ExperimentalPermissionsApi
 @Composable
 fun MainContent(modifier: Modifier = Modifier) {
-  val context = LocalContext.current
-  Permission(
-    permission = Manifest.permission.CAMERA,
-    rationale = "Permission is required to access the camera",
-    permissionNotAvailableContent = {
 
-      // TODO: Change the Text to snackbars
+  var imageUri by remember { mutableStateOf(Constants.EMPTY_IMAGE_URI) }
 
-      Column(modifier) {
-        Text("Permission denied")
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = {
-          context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            this.data = Uri.fromParts("package", context.packageName, null)
-          })
-        }) {
-          Text("Open Settings")
-        }
+  if (imageUri != Constants.EMPTY_IMAGE_URI) {
+
+    Box(modifier = modifier) {
+      Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = rememberImagePainter(imageUri),
+        contentDescription = "Captured image"
+      )
+
+      Button(modifier = Modifier.align(Alignment.BottomCenter), onClick = {
+        imageUri = Constants.EMPTY_IMAGE_URI
+      }) {
+        Text(text = "Remove image")
       }
     }
-  ) {
-    CameraPreview()
+
+  } else {
+
+    var showGallerySelect by remember { mutableStateOf(false) }
+
+    if (showGallerySelect) {
+
+      GallerySelect(
+        modifier = modifier,
+        onImageUri = { uri ->
+          showGallerySelect = false
+          imageUri = uri
+        }
+      )
+
+    } else {
+
+      Box(modifier = modifier) {
+        CameraCapture(
+          modifier = modifier,
+          onImageFile = { file ->
+            imageUri = file.toUri()
+          }
+        )
+        Button(
+          modifier = Modifier
+            .align(Alignment.TopCenter)
+            .padding(4.dp),
+          onClick = {
+            showGallerySelect = true
+          }
+        ) {
+          Text("Select from Gallery")
+        }
+      }
+
+    }
   }
 }
 
