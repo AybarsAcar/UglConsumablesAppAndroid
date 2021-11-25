@@ -50,8 +50,8 @@ fun CreateEditPage(
     topBar = {
       TopAppBar(
         navigationIcon = {
-          IconButton(onClick = { }) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
+          BackAction {
+            navController.popBackStack()
           }
         },
         title = {
@@ -120,5 +120,18 @@ fun CreateEditPagePreview() {
 fun CreateEditPagePreviewDark() {
   UglConsumablesTheme(darkTheme = true) {
     CreateEditPage(navController = rememberNavController())
+  }
+}
+
+
+@Composable
+fun BackAction(
+  onBackClicked: () -> Unit
+) {
+
+  IconButton(onClick = {
+    onBackClicked()
+  }) {
+    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
   }
 }

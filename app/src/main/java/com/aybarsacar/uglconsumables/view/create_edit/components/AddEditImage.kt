@@ -4,14 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -30,7 +29,7 @@ fun AddEditImage(modifier: Modifier = Modifier) {
 
   // TODO: May update the logic of launching the camera - may potentially make it full screen
 
-  var isCameraOpen by remember { mutableStateOf(false) }
+  val isCameraOpen by remember { mutableStateOf(false) }
 
   if (!isCameraOpen) {
     Column {
@@ -43,19 +42,20 @@ fun AddEditImage(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.BottomEnd
       ) {
 
-        IconButton(onClick = {
-          isCameraOpen = true
-        }) {
-          Icon(
-            imageVector = Icons.Default.PhotoCamera,
-            contentDescription = "Add Photo",
-            tint = Color.White
-          )
-        }
+        MainContent(modifier = Modifier.fillMaxSize())
+
+//        IconButton(onClick = { TODO: FIX
+//          isCameraOpen = true
+//        }) {
+//          Icon(
+//            imageVector = Icons.Default.PhotoCamera,
+//            contentDescription = "Add Photo",
+//            tint = Color.White
+//          )
+//        }
       }
     }
   } else {
-    MainContent(modifier = Modifier.fillMaxSize())
   }
 
 }
