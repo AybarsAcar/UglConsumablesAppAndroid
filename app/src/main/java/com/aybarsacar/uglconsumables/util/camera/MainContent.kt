@@ -15,6 +15,7 @@ fun MainContent(
   imageUri: Uri,
   removeImage: () -> Unit,
   selectImage: (Uri) -> Unit,
+  onBackClicked: () -> Unit
 ) {
 
   Box(modifier = modifier) {
@@ -22,7 +23,8 @@ fun MainContent(
       modifier = modifier,
       onImageFile = { file ->
         selectImage(file.toUri())
-      }
+      },
+      onBackClicked = onBackClicked
     )
   }
 }

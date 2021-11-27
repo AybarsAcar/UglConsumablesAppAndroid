@@ -5,16 +5,24 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
-import androidx.camera.core.UseCase
+import androidx.camera.core.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.FlashOff
+import androidx.compose.material.icons.filled.FlashOn
+import androidx.compose.material.icons.filled.RotateRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
@@ -29,9 +37,13 @@ import java.io.File
 fun CameraCapture(
   modifier: Modifier = Modifier,
   cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
-  onImageFile: (File) -> Unit = {}
+  onImageFile: (File) -> Unit = {},
+  onBackClicked: () -> Unit = {}
 ) {
 
+  // TODO: add functionality - currently only to update the UI
+  var isFlashEnabled by remember { mutableStateOf(false) }
+  val camera: Camera? = null
 
   val context = LocalContext.current
 
@@ -89,23 +101,71 @@ fun CameraCapture(
 
 
       Box {
+
         CameraPreview(modifier = Modifier.fillMaxSize()) {
           previewUseCase = it
         }
 
-        CapturePictureButton(
-          modifier = Modifier
-            .size(100.dp)
-            .padding(16.dp)
-            .align(Alignment.BottomCenter),
+        IconButton(
+          modifier = Modifier.align(Alignment.TopStart),
           onClick = {
-            coroutineScope.launch {
-              imageCaptureUseCase.takePicture(context.executor).let {
-                onImageFile(it)
+            onBackClicked()
+          }) {
+          Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
+        }
+
+        Row(
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically,
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color.Black.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
+            .padding(8.dp)
+            .align(Alignment.BottomCenter)
+        ) {
+
+          IconButton(
+            onClick = {
+              camera?.let {
+                println("TOGGLE FLASH")
+                if (it.cameraInfo.hasFlashUnit()) {
+                  // toggle camera flash
+                  isFlashEnabled = !isFlashEnabled
+                  it.cameraControl.enableTorch(isFlashEnabled)
+                }
+              }
+            }) {
+            Icon(
+              modifier = Modifier.size(32.dp),
+              imageVector = if (isFlashEnabled) Icons.Default.FlashOn else Icons.Default.FlashOff,
+              contentDescription = "Camera Flash"
+            )
+          }
+
+          CapturePictureButton(
+            modifier = Modifier.size(50.dp),
+            onClick = {
+              coroutineScope.launch {
+                imageCaptureUseCase.takePicture(context.executor).let {
+                  onImageFile(it)
+                }
               }
             }
+          )
+
+          IconButton(
+            onClick = {
+              // TODO
+            }) {
+            Icon(
+              modifier = Modifier.size(32.dp),
+              imageVector = Icons.Default.RotateRight,
+              contentDescription = "Front Camera"
+            )
           }
-        )
+        }
       }
     }
   }

@@ -61,6 +61,9 @@ fun CreateEditConsumableTab() {
         selectImage = {
           imageUri = it
           isInCameraMode = false
+        },
+        onBackClicked = {
+          isInCameraMode = false
         }
       )
     }

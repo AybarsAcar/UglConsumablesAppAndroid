@@ -5,10 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -28,7 +25,7 @@ fun CapturePictureButton(
 ) {
   val interactionSource = remember { MutableInteractionSource() }
   val isPressed by interactionSource.collectIsPressedAsState()
-  val color = if (isPressed) Color.Blue else Color.Black
+  val color = if (isPressed) MaterialTheme.colors.primary else Color.Black
   val contentPadding = PaddingValues(if (isPressed) 8.dp else 12.dp)
   OutlinedButton(
     modifier = modifier,
