@@ -54,10 +54,6 @@ fun CreateEditConsumableTab() {
     isInCameraMode -> {
 
       MainContent(
-        imageUri = imageUri,
-        removeImage = {
-          imageUri = Constants.EMPTY_IMAGE_URI
-        },
         selectImage = {
           imageUri = it
           isInCameraMode = false

@@ -12,8 +12,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 @Composable
 fun MainContent(
   modifier: Modifier = Modifier,
-  imageUri: Uri,
-  removeImage: () -> Unit,
   selectImage: (Uri) -> Unit,
   onBackClicked: () -> Unit
 ) {

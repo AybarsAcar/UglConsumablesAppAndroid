@@ -36,14 +36,9 @@ import java.io.File
 @Composable
 fun CameraCapture(
   modifier: Modifier = Modifier,
-  cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
   onImageFile: (File) -> Unit = {},
   onBackClicked: () -> Unit = {}
 ) {
-
-  // TODO: add functionality - currently only to update the UI
-  var isFlashEnabled by remember { mutableStateOf(false) }
-  val camera: Camera? = null
 
   val context = LocalContext.current
 
@@ -70,6 +65,12 @@ fun CameraCapture(
   ) {
 
     Box(modifier = modifier) {
+
+      var isFlashEnabled by remember { mutableStateOf(false) }
+      val camera: Camera? = null
+      var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }
+
+      var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
       val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -157,7 +158,28 @@ fun CameraCapture(
 
           IconButton(
             onClick = {
-              // TODO
+              lensFacing =
+                if (lensFacing == CameraSelector.LENS_FACING_BACK) CameraSelector.LENS_FACING_FRONT
+                else CameraSelector.LENS_FACING_BACK
+
+              cameraSelector = CameraSelector.Builder()
+                .requireLensFacing(lensFacing)
+                .build()
+
+              coroutineScope.launch {
+                val cameraProvider = context.getCameraProvider()
+
+                try {
+                  // Must unbind the use-cases before rebinding them.
+                  cameraProvider.unbindAll()
+                  cameraProvider.bindToLifecycle(
+                    lifecycleOwner, cameraSelector, previewUseCase, imageCaptureUseCase
+                  )
+                } catch (e: Exception) {
+                  Log.e("CameraCapture", "Failed to bind camera use cases", e)
+                }
+              }
+
             }) {
             Icon(
               modifier = Modifier.size(32.dp),
