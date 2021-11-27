@@ -19,6 +19,7 @@ import com.aybarsacar.uglconsumables.ui.theme.fabIconColor
 import com.aybarsacar.uglconsumables.view.home.components.BottomHomeBar
 import com.aybarsacar.uglconsumables.view.home.components.HomeAppBar
 import com.aybarsacar.uglconsumables.view.home.home_screen.HomeScreen
+import com.aybarsacar.uglconsumables.view.home.orders_screen.OrderScreen
 import com.aybarsacar.uglconsumables.view.home.profile_screen.ProfileScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -69,7 +70,7 @@ fun Home(
         }
 
         composable(route = NavigationItem.OrdersScreen.route) {
-          Text(text = "Orders Screen")
+          OrderScreen()
         }
 
         composable(route = NavigationItem.SettingsScreen.route) {
