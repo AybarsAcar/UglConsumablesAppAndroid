@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
     }.launchIn(viewModelScope)
   }
 
-  fun getAreaOfWorks() {
+  private fun getAreaOfWorks() {
 
     _areaOfWorkRepository.getAreaOfWorks().onEach {
 

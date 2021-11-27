@@ -1,123 +1,80 @@
 package com.aybarsacar.uglconsumables.view.create_edit.components
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PhotoAlbum
+import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import coil.compose.rememberImagePainter
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.ui.theme.addEditImageBackground
 import com.aybarsacar.uglconsumables.util.Constants
-import com.aybarsacar.uglconsumables.util.camera.CameraCapture
-import com.aybarsacar.uglconsumables.util.gallery.GallerySelect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 
 @ExperimentalPermissionsApi
 @Composable
-fun AddEditImage(modifier: Modifier = Modifier) {
+fun AddEditImage(
+  modifier: Modifier = Modifier,
+  imageUri: Uri,
+  openCamera: () -> Unit,
+  openGallery: () -> Unit
+) {
 
-  // TODO: May update the logic of launching the camera - may potentially make it full screen
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .height(240.dp)
+      .clip(RoundedCornerShape(6.dp))
+      .background(color = MaterialTheme.colors.addEditImageBackground)
+  ) {
 
-  val isCameraOpen by remember { mutableStateOf(false) }
-
-  if (!isCameraOpen) {
-    Column {
-      Box(
-        modifier = Modifier
-          .fillMaxWidth()
-          .height(240.dp)
-          .clip(RoundedCornerShape(6.dp))
-          .background(color = MaterialTheme.colors.addEditImageBackground),
-        contentAlignment = Alignment.BottomEnd
-      ) {
-
-        MainContent(modifier = Modifier.fillMaxSize())
-
-//        IconButton(onClick = { TODO: FIX
-//          isCameraOpen = true
-//        }) {
-//          Icon(
-//            imageVector = Icons.Default.PhotoCamera,
-//            contentDescription = "Add Photo",
-//            tint = Color.White
-//          )
-//        }
-      }
-    }
-  } else {
-  }
-
-}
-
-
-@ExperimentalPermissionsApi
-@Composable
-fun MainContent(modifier: Modifier = Modifier) {
-
-  var imageUri by remember { mutableStateOf(Constants.EMPTY_IMAGE_URI) }
-
-  if (imageUri != Constants.EMPTY_IMAGE_URI) {
-
-    Box(modifier = modifier) {
+    if (imageUri != Constants.EMPTY_IMAGE_URI) {
       Image(
         modifier = Modifier.fillMaxSize(),
         painter = rememberImagePainter(imageUri),
         contentDescription = "Captured image"
       )
-
-      Button(modifier = Modifier.align(Alignment.BottomCenter), onClick = {
-        imageUri = Constants.EMPTY_IMAGE_URI
-      }) {
-        Text(text = "Remove image")
-      }
     }
 
-  } else {
-
-    var showGallerySelect by remember { mutableStateOf(false) }
-
-    if (showGallerySelect) {
-
-      GallerySelect(
-        modifier = modifier,
-        onImageUri = { uri ->
-          showGallerySelect = false
-          imageUri = uri
-        }
+    IconButton(
+      modifier = Modifier.align(Alignment.BottomEnd),
+      onClick = {
+        openCamera()
+      }) {
+      Icon(
+        imageVector = Icons.Default.PhotoCamera,
+        contentDescription = "Add Photo",
+        tint = Color.White
       )
+    }
 
-    } else {
-
-      Box(modifier = modifier) {
-        CameraCapture(
-          modifier = modifier,
-          onImageFile = { file ->
-            imageUri = file.toUri()
-          }
-        )
-        Button(
-          modifier = Modifier
-            .align(Alignment.TopCenter)
-            .padding(4.dp),
-          onClick = {
-            showGallerySelect = true
-          }
-        ) {
-          Text("Select from Gallery")
-        }
-      }
-
+    IconButton(
+      modifier = Modifier.align(Alignment.BottomStart),
+      onClick = {
+        openGallery()
+      }) {
+      Icon(
+        imageVector = Icons.Default.PhotoAlbum,
+        contentDescription = "Go to Album",
+        tint = Color.White
+      )
     }
   }
 }
@@ -127,7 +84,7 @@ fun MainContent(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun AddEditImagePreview() {
-  AddEditImage()
+//  AddEditImage(imageUri = Constants.EMPTY_IMAGE_URI) {}
 }
 
 @ExperimentalPermissionsApi
@@ -135,6 +92,6 @@ fun AddEditImagePreview() {
 @Composable
 fun AddEditImagePreviewDark() {
   UglConsumablesTheme(darkTheme = true) {
-    AddEditImage()
+//    AddEditImage(imageUri = Constants.EMPTY_IMAGE_URI) {}
   }
 }
