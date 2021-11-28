@@ -34,6 +34,7 @@ class UserRepositoryImpl @Inject constructor(private val _api: UglConsumablesApp
     return _api.register(registerAccountDetails)
   }
 
+
   override fun login(loginAccountDetails: LoginAccountDetails): Flow<Resource<AccountDto>> = flow {
 
     try {

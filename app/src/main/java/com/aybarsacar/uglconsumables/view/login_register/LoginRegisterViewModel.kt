@@ -1,6 +1,6 @@
 package com.aybarsacar.uglconsumables.view.login_register
 
-import androidx.compose.runtime.State
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,7 +21,7 @@ class LoginRegisterViewModel @Inject constructor(private val _userRepository: Us
   private var _token by mutableStateOf("")
 
   private val _state = mutableStateOf(LoginRegisterState())
-  val state: State<LoginRegisterState> = _state
+  val state: MutableState<LoginRegisterState> = _state
 
 
   fun login(loginAccountDetails: LoginAccountDetails) {
@@ -48,7 +48,6 @@ class LoginRegisterViewModel @Inject constructor(private val _userRepository: Us
       }
 
     }.launchIn(viewModelScope)
-
   }
 }
 

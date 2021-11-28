@@ -12,3 +12,10 @@ data class AreaOfWorkDto(
   @SerializedName("serviceOrder")
   val serviceOrder: Int
 )
+
+data class AreaOfWorkFormValues(
+  @SerializedName("description")
+  val description: String,
+  @SerializedName("serviceOrder")
+  val serviceOrder: Int
+)

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aybarsacar.uglconsumables.view.home.HomeViewModel
 import com.aybarsacar.uglconsumables.view.home.components.EmptyContent
-import com.aybarsacar.uglconsumables.view.home.components.OrderListItem
+import com.aybarsacar.uglconsumables.view.home.components.OrderListItemCard
 import com.aybarsacar.uglconsumables.view.home.components.Shimmer
 
 
@@ -56,7 +56,7 @@ fun OrderScreen(
   ) {
 
     items(state.orderListItems) { order ->
-      OrderListItem(orderListItem = order) {}
+      OrderListItemCard(orderListItem = order) {}
     }
   }
 }

@@ -85,3 +85,4 @@ val Colors.splashScreenBackground: Color
 val Colors.itemBorderColor: Color
   @Composable
   get() = if (isLight) LightGray else Color.Black
+

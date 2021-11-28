@@ -12,10 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
+import com.aybarsacar.uglconsumables.util.noRippleClickable
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -29,6 +31,8 @@ import kotlinx.coroutines.launch
 fun CreateEditPage(
   navController: NavController
 ) {
+
+  val focusManager = LocalFocusManager.current
 
   val tabData = listOf(
     "Area of Work" to Icons.Default.Apartment,
@@ -60,7 +64,9 @@ fun CreateEditPage(
       )
     }
   ) {
-    Column {
+    Column(modifier = Modifier.noRippleClickable {
+      focusManager.clearFocus()
+    }) {
       TabRow(
         selectedTabIndex = tabIndex,
       ) {

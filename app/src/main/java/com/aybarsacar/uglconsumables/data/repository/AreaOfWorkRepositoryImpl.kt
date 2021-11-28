@@ -2,6 +2,7 @@ package com.aybarsacar.uglconsumables.data.repository
 
 import com.aybarsacar.uglconsumables.data.remote.UglConsumablesAppApi
 import com.aybarsacar.uglconsumables.data.remote.dto.AreaOfWorkDto
+import com.aybarsacar.uglconsumables.data.remote.dto.AreaOfWorkFormValues
 import com.aybarsacar.uglconsumables.domain.repository.AreaOfWorkRepository
 import com.aybarsacar.uglconsumables.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -39,5 +40,10 @@ class AreaOfWorkRepositoryImpl @Inject constructor(private val _api: UglConsumab
         )
       )
     }
+  }
+
+
+  override suspend fun createAreaOfWork(areaOfWork: AreaOfWorkFormValues) {
+    _api.createAreaOfWork(areaOfWork)
   }
 }

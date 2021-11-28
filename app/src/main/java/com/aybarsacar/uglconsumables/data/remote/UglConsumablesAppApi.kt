@@ -34,8 +34,13 @@ interface UglConsumablesAppApi {
   @GET("Consumable")
   suspend fun getConsumables(@Query("serviceOrderId") serviceOrderId: Int? = null): List<ConsumableDto>
 
+
   @GET("AreaOfWork")
   suspend fun getAreaOfWorks(): List<AreaOfWorkDto>
+
+  @POST("AreaOfWork")
+  suspend fun createAreaOfWork(@Body areaOfWorkFormValues: AreaOfWorkFormValues)
+
 
   @GET("Order")
   suspend fun getOrders(@Query("serviceOrderId") serviceOrderId: Int? = null): List<OrderListDto>

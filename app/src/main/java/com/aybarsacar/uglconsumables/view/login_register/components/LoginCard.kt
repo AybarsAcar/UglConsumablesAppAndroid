@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.navigation.Screen
+import com.aybarsacar.uglconsumables.util.noRippleClickable
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterViewModel
 
 
@@ -35,6 +37,9 @@ fun LoginCard(
   navController: NavController,
   swapCard: () -> Unit
 ) {
+
+  val focusManager = LocalFocusManager.current
+  val scaffoldState = rememberScaffoldState()
 
   val loginState = viewModel.state.value
 
@@ -48,16 +53,19 @@ fun LoginCard(
     email.isNotBlank() && password.length >= 8
   }
 
-
-  loginState.account?.let {
-    if (it.token.isNotEmpty()) {
-      navController.navigate(Screen.Home.route)
+  LaunchedEffect(key1 = loginState.account) {
+    loginState.account?.let {
+      if (it.token.isNotEmpty()) {
+        navController.navigate(Screen.Home.route)
+      }
     }
   }
 
-
   Card(
     modifier = modifier
+      .noRippleClickable {
+        focusManager.clearFocus()
+      }
   ) {
 
     Column(
@@ -121,6 +129,7 @@ fun LoginCard(
             }
           },
           keyboardActions = KeyboardActions {
+            focusManager.clearFocus()
             viewModel.login(LoginAccountDetails(email, password))
           }
         )
@@ -129,6 +138,7 @@ fun LoginCard(
 
         Button(
           onClick = {
+            focusManager.clearFocus()
             viewModel.login(LoginAccountDetails(email, password))
           },
           modifier = Modifier.fillMaxWidth(),

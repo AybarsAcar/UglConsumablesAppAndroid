@@ -5,10 +5,9 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -18,18 +17,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aybarsacar.uglconsumables.data.remote.dto.OrderListDto
-import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
-import com.aybarsacar.uglconsumables.ui.theme.itemBorderColor
+import com.aybarsacar.uglconsumables.ui.theme.*
 
 
 @ExperimentalMaterialApi
 @Composable
-fun OrderListItem(
+fun OrderListItemCard(
   orderListItem: OrderListDto,
   navigateToOrderDetails: (Int) -> Unit
 ) {
@@ -59,6 +59,27 @@ fun OrderListItem(
     ) {
 
       Row(verticalAlignment = Alignment.CenterVertically) {
+
+        if (isSystemInDarkTheme()) {
+          CompletionIndicator(
+            modifier = Modifier
+              .size(16.dp)
+              .weight(1f),
+            isCompleted = orderListItem.isClosed,
+            successColor = SuccessDark.toArgb(),
+            errorColor = ErrorDark.toArgb()
+          )
+        } else {
+          CompletionIndicator(
+            modifier = Modifier
+              .size(16.dp)
+              .weight(1f),
+            isCompleted = orderListItem.isClosed,
+            successColor = SuccessLight.toArgb(),
+            errorColor = ErrorLight.toArgb()
+          )
+        }
+
         Text(
           modifier = Modifier.weight(6f),
           text = orderListItem.serviceOrderId.toString(),
@@ -116,7 +137,7 @@ fun OrderListItem(
 @Preview
 @Composable
 fun OrderListItemPreview() {
-  OrderListItem(
+  OrderListItemCard(
     OrderListDto(1, 6000, "Car Shop 1", "aybarsacar", "10", false)
   ) {}
 }
@@ -126,8 +147,23 @@ fun OrderListItemPreview() {
 @Composable
 fun OrderListItemPreviewDark() {
   UglConsumablesTheme(darkTheme = true) {
-    OrderListItem(
+    OrderListItemCard(
       OrderListDto(1, 6000, "Car Shop 1", "aybarsacar", "10", false)
     ) {}
+  }
+}
+
+
+@Composable
+fun CompletionIndicator(
+  modifier: Modifier = Modifier,
+  isCompleted: Boolean,
+  successColor: Int,
+  errorColor: Int
+) {
+  Canvas(
+    modifier = modifier
+  ) {
+    drawCircle(color = Color(color = if (isCompleted) successColor else errorColor))
   }
 }
