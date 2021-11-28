@@ -14,6 +14,7 @@ import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.Home
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
+import com.aybarsacar.uglconsumables.view.splash_screen.SplashScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,6 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-
     setContent {
       UglConsumablesTheme {
 
@@ -36,8 +36,14 @@ class MainActivity : ComponentActivity() {
 
         NavHost(
           navController = navController,
-          startDestination = if (true/*TODO - add auth logic*/) Screen.LoginRegister.route else Screen.Home.route
+          startDestination = Screen.UglSplashScreen.route
         ) {
+
+          composable(
+            route = Screen.UglSplashScreen.route
+          ) {
+            SplashScreen(navController = navController)
+          }
 
           composable(
             route = Screen.LoginRegister.route

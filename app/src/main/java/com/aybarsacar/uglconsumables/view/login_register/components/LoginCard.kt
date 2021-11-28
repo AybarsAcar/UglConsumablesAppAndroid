@@ -39,7 +39,6 @@ fun LoginCard(
 ) {
 
   val focusManager = LocalFocusManager.current
-  val scaffoldState = rememberScaffoldState()
 
   val loginState = viewModel.state.value
 
@@ -136,17 +135,22 @@ fun LoginCard(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-          onClick = {
-            focusManager.clearFocus()
-            viewModel.login(LoginAccountDetails(email, password))
-          },
-          modifier = Modifier.fillMaxWidth(),
-          shape = RoundedCornerShape(16.dp),
-          enabled = isFormValid && !loginState.isLoading
-        ) {
-          Text(text = "Login")
+        if (loginState.isLoading) {
+          CircularProgressIndicator()
+        } else {
+          Button(
+            onClick = {
+              focusManager.clearFocus()
+              viewModel.login(LoginAccountDetails(email, password))
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            enabled = isFormValid
+          ) {
+            Text(text = "Login")
+          }
         }
+
 
         Spacer(modifier = Modifier.weight(1f))
 

@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aybarsacar.uglconsumables.data.local.DataStoreRepository
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
 import com.aybarsacar.uglconsumables.util.Resource
@@ -16,12 +17,15 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginRegisterViewModel @Inject constructor(private val _userRepository: UserRepository) : ViewModel() {
+class LoginRegisterViewModel @Inject constructor(
+  private val _userRepository: UserRepository,
+  private val _dataStoreRepository: DataStoreRepository
+) : ViewModel() {
 
   private var _token by mutableStateOf("")
 
   private val _state = mutableStateOf(LoginRegisterState())
-  val state: MutableState<LoginRegisterState> = _state
+  val state: MutableState<LoginRegisterState> get() = _state
 
 
   fun login(loginAccountDetails: LoginAccountDetails) {
@@ -33,7 +37,11 @@ class LoginRegisterViewModel @Inject constructor(private val _userRepository: Us
 
           _state.value = LoginRegisterState(account = result.data)
 
-          result.data?.let { _token = it.token }
+          result.data?.let {
+            _token = it.token
+
+            _dataStoreRepository.saveUserDetails(it.username, it.token, it.email, it.department)
+          }
         }
 
         is Resource.Loading -> {

@@ -1,10 +1,15 @@
 package com.aybarsacar.uglconsumables.navigation
 
+import android.annotation.SuppressLint
+
 
 /**
  * List of screens for UglConsumables App
  */
 sealed class Screen(val route: String) {
+
+  @SuppressLint("CustomSplashScreen")
+  object UglSplashScreen : Screen("ugl_splash_screen")
 
   object LoginRegister : Screen("login_register")
 
