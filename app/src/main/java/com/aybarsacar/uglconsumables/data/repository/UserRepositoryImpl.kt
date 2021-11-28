@@ -30,8 +30,26 @@ class UserRepositoryImpl @Inject constructor(private val _api: UglConsumablesApp
     return _api.getCurrentUser()
   }
 
-  override suspend fun register(registerAccountDetails: RegisterAccountDetails): AccountDto {
-    return _api.register(registerAccountDetails)
+  override fun register(registerAccountDetails: RegisterAccountDetails): Flow<Resource<AccountDto>> = flow {
+
+    try {
+      emit(Resource.Loading<AccountDto>())
+
+      val response = _api.register(registerAccountDetails)
+
+      // TODO cache the currently logged in user
+
+      emit(Resource.Success<AccountDto>(response))
+
+    } catch (e: HttpException) {
+
+      emit(Resource.Error<AccountDto>(e.localizedMessage ?: "An unexpected error occurred"))
+
+    } catch (e: IOException) {
+
+      emit(Resource.Error<AccountDto>("Could not reach server. Check your internet connection"))
+    }
+
   }
 
 

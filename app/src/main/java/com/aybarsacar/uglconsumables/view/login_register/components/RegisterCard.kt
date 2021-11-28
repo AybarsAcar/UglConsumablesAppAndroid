@@ -22,20 +22,24 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.util.noRippleClickable
+import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterViewModel
 
 
 @Composable
 fun RegisterCard(
   modifier: Modifier = Modifier,
-  viewModel: ViewModel,
+  viewModel: LoginRegisterViewModel,
   navController: NavController,
   swapCard: () -> Unit
 ) {
 
   val focusManager = LocalFocusManager.current
+
+  val state = viewModel.state.value
 
   // form state
   var username by remember { mutableStateOf("") }
@@ -48,6 +52,16 @@ fun RegisterCard(
   val isFormValid by derivedStateOf {
     email.isNotBlank() && password.length >= 8
   }
+
+
+  LaunchedEffect(key1 = state.account) {
+    state.account?.let {
+      if (it.token.isNotEmpty()) {
+        navController.navigate(Screen.Home.route)
+      }
+    }
+  }
+
 
   Card(
     modifier = modifier
@@ -151,7 +165,9 @@ fun RegisterCard(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-          onClick = { /*TODO*/ },
+          onClick = {
+            viewModel.register(RegisterAccountDetails(username, email, password))
+          },
           modifier = Modifier.fillMaxWidth(),
           shape = RoundedCornerShape(16.dp),
           enabled = isFormValid

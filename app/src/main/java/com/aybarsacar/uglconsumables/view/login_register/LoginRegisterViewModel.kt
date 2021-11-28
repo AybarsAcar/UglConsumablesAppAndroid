@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aybarsacar.uglconsumables.data.local.DataStoreRepository
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
+import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
 import com.aybarsacar.uglconsumables.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +33,37 @@ class LoginRegisterViewModel @Inject constructor(
   fun login(loginAccountDetails: LoginAccountDetails) {
 
     _userRepository.login(loginAccountDetails).onEach { result ->
+
+      when (result) {
+        is Resource.Success -> {
+
+          _state.value = LoginRegisterState(account = result.data)
+
+          result.data?.let {
+            _token = it.token
+
+            _dataStoreRepository.saveUserDetails(it.username, it.token, it.email, it.department)
+          }
+        }
+
+        is Resource.Loading -> {
+          _state.value = LoginRegisterState(isLoading = true)
+        }
+
+        is Resource.Error -> {
+          val message = result.message ?: "An unexpected error occurred"
+
+          _state.value = LoginRegisterState(error = message)
+        }
+      }
+
+    }.launchIn(viewModelScope)
+  }
+
+
+  fun register(registerAccountDetails: RegisterAccountDetails) {
+
+    _userRepository.register(registerAccountDetails).onEach { result ->
 
       when (result) {
         is Resource.Success -> {
