@@ -35,8 +35,6 @@ fun SplashScreen(
   navController: NavController,
 ) {
 
-//  var account by remember { mutableStateOf(AccountDto()) }
-
   val context = LocalContext.current
   val dataStore = DataStoreRepository(context)
 

@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
           }
 
           composable(
-            route = Screen.LoginRegister.route
+            route = Screen.LoginRegister.route,
           ) {
             LoginRegisterScreen(navController = navController)
           }

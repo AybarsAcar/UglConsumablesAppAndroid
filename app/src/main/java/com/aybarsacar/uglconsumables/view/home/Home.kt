@@ -66,7 +66,9 @@ fun Home(
         }
 
         composable(route = NavigationItem.ProfileScreen.route) {
-          ProfileScreen()
+          ProfileScreen(
+            externalRouter = externalRouter
+          )
         }
 
         composable(route = NavigationItem.OrdersScreen.route) {

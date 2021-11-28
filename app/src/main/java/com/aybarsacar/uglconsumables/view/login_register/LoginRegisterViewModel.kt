@@ -13,6 +13,7 @@ import com.aybarsacar.uglconsumables.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -56,6 +57,14 @@ class LoginRegisterViewModel @Inject constructor(
       }
 
     }.launchIn(viewModelScope)
+  }
+
+
+  fun logout() {
+    _token = ""
+    viewModelScope.launch {
+      _dataStoreRepository.clear()
+    }
   }
 }
 

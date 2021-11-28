@@ -63,4 +63,11 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val _c
       AccountDto(username, email, token, department)
     }
 
+
+  suspend fun clear() {
+    _dataStore.edit {
+      it.clear()
+    }
+  }
+
 }
