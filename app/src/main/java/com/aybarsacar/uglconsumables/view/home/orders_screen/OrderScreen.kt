@@ -13,6 +13,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.aybarsacar.uglconsumables.navigation.Router
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.view.home.HomeViewModel
 import com.aybarsacar.uglconsumables.view.home.components.EmptyContent
 import com.aybarsacar.uglconsumables.view.home.components.OrderListItemCard
@@ -22,8 +24,10 @@ import com.aybarsacar.uglconsumables.view.home.components.Shimmer
 @ExperimentalMaterialApi
 @Composable
 fun OrderScreen(
-  viewModel: HomeViewModel = hiltViewModel()
-) {
+  externalRouter: Router,
+  viewModel: HomeViewModel = hiltViewModel(),
+
+  ) {
 
   val state = viewModel.state.value
 
@@ -56,7 +60,9 @@ fun OrderScreen(
   ) {
 
     items(state.orderListItems) { order ->
-      OrderListItemCard(orderListItem = order) {}
+      OrderListItemCard(orderListItem = order) {
+        externalRouter.navigateTo(Screen.OrderDetailed.createRoute(it))
+      }
     }
   }
 }

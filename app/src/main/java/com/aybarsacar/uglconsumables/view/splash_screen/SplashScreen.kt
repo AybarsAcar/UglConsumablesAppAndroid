@@ -43,9 +43,17 @@ fun SplashScreen(
     dataStore.readUserDetails.collect {
 
       if (it.token.isEmpty()) {
-        navController.navigate(Screen.LoginRegister.route)
+        navController.navigate(Screen.LoginRegister.route) {
+          popUpTo(Screen.LoginRegister.route) {
+            inclusive = true
+          }
+        }
       } else {
-        navController.navigate(Screen.Home.route)
+        navController.navigate(Screen.Home.route) {
+          popUpTo(Screen.Home.route) {
+            inclusive = true
+          }
+        }
       }
     }
   }

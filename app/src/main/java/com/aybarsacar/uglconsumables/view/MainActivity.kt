@@ -14,6 +14,7 @@ import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.Home
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
+import com.aybarsacar.uglconsumables.view.order_details.OrderDetailedScreen
 import com.aybarsacar.uglconsumables.view.splash_screen.SplashScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -63,6 +64,16 @@ class MainActivity : ComponentActivity() {
 
           composable(route = Screen.CreateEdit.route) {
             CreateEditPage(navController = navController)
+          }
+
+          composable(route = Screen.OrderDetailed.route) {
+            val orderId = it.arguments?.getString("id")
+
+            requireNotNull(orderId) {
+              "Order Id cannot be null to navigate to this screen"
+            }
+
+            OrderDetailedScreen(orderId = orderId.toInt())
           }
         }
       }

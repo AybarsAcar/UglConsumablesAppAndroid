@@ -48,7 +48,7 @@ fun OrderListItemCard(
     border = BorderStroke(1.dp, MaterialTheme.colors.itemBorderColor),
     elevation = 2.dp,
     onClick = {
-      isExpanded = !isExpanded
+      navigateToOrderDetails(orderListItem.id)
     }
   ) {
 
