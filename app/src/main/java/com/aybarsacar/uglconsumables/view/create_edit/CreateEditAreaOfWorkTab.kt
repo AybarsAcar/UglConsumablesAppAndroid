@@ -11,13 +11,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.aybarsacar.uglconsumables.data.remote.dto.AreaOfWorkFormValues
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.ui.theme.successBackgroundColor
+import com.aybarsacar.uglconsumables.view.create_edit.viewmodell.CreateEditAreaOfWorkViewModel
 
 
 @Composable
-fun CreateEditAreaOfWorkTab() {
+fun CreateEditAreaOfWorkTab(
+  viewModel: CreateEditAreaOfWorkViewModel = hiltViewModel(),
+  navController: NavController
+) {
+
+  val state = viewModel.state.value
+
   var serviceOrderId by remember { mutableStateOf("") }
   var description by remember { mutableStateOf("") }
+
+
+  LaunchedEffect(key1 = state.success) {
+    if (state.success) {
+      navController.navigate(Screen.Home.route)
+    }
+  }
 
 
   Column(
@@ -75,7 +93,7 @@ fun CreateEditAreaOfWorkTab() {
 
       Button(
         onClick = {
-          //TODO: Create Area of Work
+          viewModel.createAreaOfWork(AreaOfWorkFormValues(description, serviceOrderId.toInt()))
         },
         colors = ButtonDefaults.buttonColors(MaterialTheme.colors.successBackgroundColor),
         modifier = Modifier

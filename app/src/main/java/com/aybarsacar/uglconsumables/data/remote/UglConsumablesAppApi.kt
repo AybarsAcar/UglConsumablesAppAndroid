@@ -12,7 +12,6 @@ interface UglConsumablesAppApi {
   @GET("User")
   suspend fun getUsers(): List<AccountDto>
 
-
   @GET("User/email/{email}")
   suspend fun getUserByEmail(@Path("email") email: String): AccountDto
 
@@ -22,10 +21,8 @@ interface UglConsumablesAppApi {
   @POST("Account")
   suspend fun getCurrentUser(): AccountDto
 
-
   @POST("Account/register")
   suspend fun register(@Body registerAccountDetails: RegisterAccountDetails): AccountDto
-
 
   @POST("Account/login")
   suspend fun login(@Body loginAccountDetails: LoginAccountDetails): AccountDto

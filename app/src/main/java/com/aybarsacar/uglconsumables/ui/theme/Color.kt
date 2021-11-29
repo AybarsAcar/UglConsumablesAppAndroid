@@ -66,6 +66,10 @@ val Colors.addEditImageBackground: Color
   @Composable
   get() = if (isLight) MediumGray else ElevatedBackgroundGray
 
+val Colors.profileHeaderBackground: Color
+  @Composable
+  get() = if (isLight) DefaultBlue else SurfaceGray
+
 val Colors.taskItemTextColor: Color
   @Composable
   get() = if (isLight) DarkGray else LightGray

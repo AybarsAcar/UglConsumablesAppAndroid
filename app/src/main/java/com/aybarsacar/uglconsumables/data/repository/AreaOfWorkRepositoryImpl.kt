@@ -43,7 +43,23 @@ class AreaOfWorkRepositoryImpl @Inject constructor(private val _api: UglConsumab
   }
 
 
-  override suspend fun createAreaOfWork(areaOfWork: AreaOfWorkFormValues) {
-    _api.createAreaOfWork(areaOfWork)
+  override fun createAreaOfWork(areaOfWork: AreaOfWorkFormValues): Flow<Resource<Unit>> = flow {
+
+    try {
+      emit(Resource.Loading<Unit>())
+
+      _api.createAreaOfWork(areaOfWorkFormValues = areaOfWork)
+
+      emit(Resource.Success<Unit>(Unit))
+
+    } catch (e: HttpException) {
+
+      emit(Resource.Error<Unit>(e.localizedMessage ?: "An unexpected error occurred"))
+
+    } catch (e: IOException) {
+
+      emit(Resource.Error<Unit>("Could not reach server. Check your internet connection"))
+    }
+
   }
 }

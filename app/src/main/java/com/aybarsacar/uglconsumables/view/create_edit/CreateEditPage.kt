@@ -97,7 +97,7 @@ fun CreateEditPage(
           when (tabData[index].first) {
 
             "Area of Work" -> {
-              CreateEditAreaOfWorkTab()
+              CreateEditAreaOfWorkTab(navController = navController)
             }
 
             "Consumable" -> {

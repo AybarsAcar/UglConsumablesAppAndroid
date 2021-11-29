@@ -22,7 +22,7 @@ data class ConsumableDto(
 )
 
 
-data class CreateConsumableDto(
+data class ConsumableFormValues(
   val sapId: Int = -1,
   val description: String = "",
   val unitOfMeasure: String = "",

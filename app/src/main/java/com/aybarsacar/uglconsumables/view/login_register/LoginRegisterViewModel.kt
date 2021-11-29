@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aybarsacar.uglconsumables.data.local.DataStoreRepository
+import com.aybarsacar.uglconsumables.data.remote.dto.AccountDto
 import com.aybarsacar.uglconsumables.data.remote.dto.LoginAccountDetails
 import com.aybarsacar.uglconsumables.data.remote.dto.RegisterAccountDetails
 import com.aybarsacar.uglconsumables.domain.repository.UserRepository
@@ -97,6 +98,10 @@ class LoginRegisterViewModel @Inject constructor(
     viewModelScope.launch {
       _dataStoreRepository.clear()
     }
+  }
+
+  fun setAccountFromDataStore(accountDto: AccountDto) {
+    _state.value = LoginRegisterState(account = accountDto)
   }
 }
 

@@ -10,5 +10,5 @@ interface AreaOfWorkRepository {
 
   fun getAreaOfWorks(): Flow<Resource<List<AreaOfWorkDto>>>
 
-  suspend fun createAreaOfWork(areaOfWork: AreaOfWorkFormValues)
+  fun createAreaOfWork(areaOfWork: AreaOfWorkFormValues): Flow<Resource<Unit>>
 }
