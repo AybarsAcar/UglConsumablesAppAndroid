@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -132,12 +133,13 @@ fun CreateEditPagePreviewDark() {
 
 @Composable
 fun BackAction(
+  color: Color = Color.White,
   onBackClicked: () -> Unit
 ) {
 
   IconButton(onClick = {
     onBackClicked()
   }) {
-    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
+    Icon(tint = color, imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
   }
 }

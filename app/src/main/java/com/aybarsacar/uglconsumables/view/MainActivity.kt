@@ -73,7 +73,10 @@ class MainActivity : ComponentActivity() {
               "Order Id cannot be null to navigate to this screen"
             }
 
-            OrderDetailedScreen(orderId = orderId.toInt())
+            OrderDetailedScreen(
+              orderId = orderId.toInt(),
+              navController = navController
+            )
           }
         }
       }

@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import com.aybarsacar.uglconsumables.data.remote.dto.AreaOfWorkFormValues
 import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.ui.theme.successBackgroundColor
-import com.aybarsacar.uglconsumables.view.create_edit.viewmodell.CreateEditAreaOfWorkViewModel
+import com.aybarsacar.uglconsumables.view.create_edit.viewmodel.CreateEditAreaOfWorkViewModel
 
 
 @Composable

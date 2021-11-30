@@ -41,4 +41,7 @@ interface UglConsumablesAppApi {
 
   @GET("Order")
   suspend fun getOrders(@Query("serviceOrderId") serviceOrderId: Int? = null): List<OrderListDto>
+
+  @GET("Order/{id}")
+  suspend fun getOrderDetails(@Path("id") id: Int): OrderDetailedDto
 }

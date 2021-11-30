@@ -60,25 +60,14 @@ fun OrderListItemCard(
 
       Row(verticalAlignment = Alignment.CenterVertically) {
 
-        if (isSystemInDarkTheme()) {
-          CompletionIndicator(
-            modifier = Modifier
-              .size(16.dp)
-              .weight(1f),
-            isCompleted = orderListItem.isClosed,
-            successColor = SuccessDark.toArgb(),
-            errorColor = ErrorDark.toArgb()
-          )
-        } else {
-          CompletionIndicator(
-            modifier = Modifier
-              .size(16.dp)
-              .weight(1f),
-            isCompleted = orderListItem.isClosed,
-            successColor = SuccessLight.toArgb(),
-            errorColor = ErrorLight.toArgb()
-          )
-        }
+        CompletionIndicator(
+          modifier = Modifier
+            .size(16.dp)
+            .weight(1f),
+          isCompleted = orderListItem.isClosed,
+          successColor = if (isSystemInDarkTheme()) SuccessDark.toArgb() else SuccessLight.toArgb(),
+          errorColor = if (isSystemInDarkTheme()) ErrorDark.toArgb() else ErrorLight.toArgb()
+        )
 
         Text(
           modifier = Modifier.weight(6f),
@@ -105,6 +94,7 @@ fun OrderListItemCard(
         Divider()
 
         Text(
+          modifier = Modifier.padding(top = 12.dp),
           text = orderListItem.areaOfWorkDescription,
           fontSize = MaterialTheme.typography.subtitle1.fontSize,
           fontWeight = FontWeight.Normal,

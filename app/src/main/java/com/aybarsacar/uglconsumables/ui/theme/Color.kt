@@ -62,6 +62,10 @@ val Colors.taskItemBackgroundColor: Color
   @Composable
   get() = if (isLight) Color.White else SurfaceGray
 
+val Colors.orderItemCardBackgroundColor: Color // TODO
+  @Composable
+  get() = if (isLight) LightGray else SurfaceGray
+
 val Colors.addEditImageBackground: Color
   @Composable
   get() = if (isLight) MediumGray else ElevatedBackgroundGray
@@ -82,7 +86,7 @@ val Colors.successBackgroundColor: Color
   @Composable
   get() = if (isLight) SuccessLight else SuccessDark
 
-val Colors.splashScreenBackground: Color
+val Colors.orderDetailsTopBackground: Color
   @Composable
   get() = if (isLight) DarkBlue else Color.Black
 

@@ -1,4 +1,4 @@
-package com.aybarsacar.uglconsumables.view.create_edit.viewmodell
+package com.aybarsacar.uglconsumables.view.create_edit.viewmodel
 
 
 data class CreateEditState(
