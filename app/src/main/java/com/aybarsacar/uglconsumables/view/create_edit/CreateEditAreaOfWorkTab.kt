@@ -30,6 +30,10 @@ fun CreateEditAreaOfWorkTab(
   var serviceOrderId by remember { mutableStateOf("") }
   var description by remember { mutableStateOf("") }
 
+  val isFormValid by derivedStateOf {
+    serviceOrderId.isNotBlank() && description.isNotBlank()
+  }
+
 
   LaunchedEffect(key1 = state.success) {
     if (state.success) {
@@ -99,7 +103,7 @@ fun CreateEditAreaOfWorkTab(
         modifier = Modifier
           .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        enabled = true, // TODO: add form check
+        enabled = isFormValid
       ) {
         Text(text = "Create Work Area")
       }

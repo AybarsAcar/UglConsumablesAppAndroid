@@ -59,6 +59,11 @@ fun CreateEditConsumableTab(
   var isPrd by remember { mutableStateOf(false) }
   var serviceOrderIds by remember { mutableStateOf(emptyList<Int>()) }
 
+  val isFormValid by derivedStateOf {
+    sapId.isNotBlank() && description.isNotBlank()
+  }
+
+
   // image selection values
   var imageUri by remember { mutableStateOf(Constants.EMPTY_IMAGE_URI) }
   var isInCameraMode by remember { mutableStateOf(false) }
@@ -236,7 +241,7 @@ fun CreateEditConsumableTab(
             modifier = Modifier
               .fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            enabled = true, // TODO: add form check
+            enabled = isFormValid
           ) {
             Text(text = "Create Consumable")
           }
