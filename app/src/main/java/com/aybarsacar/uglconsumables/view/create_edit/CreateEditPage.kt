@@ -102,7 +102,7 @@ fun CreateEditPage(
             }
 
             "Consumable" -> {
-              CreateEditConsumableTab()
+              CreateEditConsumableTab(navController = navController)
             }
           }
         }

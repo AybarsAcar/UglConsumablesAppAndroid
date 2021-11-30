@@ -15,6 +15,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.aybarsacar.uglconsumables.data.remote.dto.ConsumableFormValues
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.ui.theme.successBackgroundColor
 import com.aybarsacar.uglconsumables.util.Constants
@@ -24,6 +28,7 @@ import com.aybarsacar.uglconsumables.view.create_edit.components.AddEditImage
 import com.aybarsacar.uglconsumables.view.create_edit.components.MultiSelectorDialog
 import com.aybarsacar.uglconsumables.view.create_edit.components.MyDropdown
 import com.aybarsacar.uglconsumables.view.create_edit.components.StorageLocationChip
+import com.aybarsacar.uglconsumables.view.create_edit.viewmodel.CreateEditConsumableViewModel
 import com.aybarsacar.uglconsumables.view.home.HomeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
@@ -36,10 +41,12 @@ enum class UnitOfMeasure(val value: String) {
 @ExperimentalPermissionsApi
 @Composable
 fun CreateEditConsumableTab(
-  viewModel: HomeViewModel = hiltViewModel()
+  homeViewModel: HomeViewModel = hiltViewModel(),
+  viewModel: CreateEditConsumableViewModel = hiltViewModel(),
+  navController: NavController
 ) {
+  val homeState = homeViewModel.state.value
   val state = viewModel.state.value
-
 
   val scrollState = rememberScrollState()
 
@@ -56,6 +63,14 @@ fun CreateEditConsumableTab(
   var imageUri by remember { mutableStateOf(Constants.EMPTY_IMAGE_URI) }
   var isInCameraMode by remember { mutableStateOf(false) }
   var showGallerySelect by remember { mutableStateOf(false) }
+
+
+  LaunchedEffect(key1 = state.success) {
+    if (state.success) {
+      navController.navigate(Screen.Home.route)
+    }
+  }
+
 
 
   when {
@@ -92,7 +107,7 @@ fun CreateEditConsumableTab(
             .fillMaxSize()
             .padding(32.dp)
         ) {
-          MultiSelectorDialog(areaOfWorks = state.areaOfWorks) { selectedServiceOrders ->
+          MultiSelectorDialog(areaOfWorks = homeState.areaOfWorks) { selectedServiceOrders ->
             isServiceOrderDialogShowing = false
             serviceOrderIds = selectedServiceOrders
           }
@@ -185,8 +200,9 @@ fun CreateEditConsumableTab(
           Spacer(modifier = Modifier.height(12.dp))
 
           MyDropdown(
-            options = UnitOfMeasure.values().map { it.value }) {
-
+            options = UnitOfMeasure.values().map { it.value }
+          ) {
+            unitOfMeasure = UnitOfMeasure.valueOf(it)
           }
 
           Spacer(modifier = Modifier.height(12.dp))
@@ -205,7 +221,16 @@ fun CreateEditConsumableTab(
 
           Button(
             onClick = {
-              //TODO: Create consumable
+              // Create Consumable
+              viewModel.createConsumable(
+                ConsumableFormValues(
+                  sapId.toInt(),
+                  description,
+                  unitOfMeasure.value,
+                  isPrd,
+                  serviceOrderIds
+                )
+              )
             },
             colors = ButtonDefaults.buttonColors(MaterialTheme.colors.successBackgroundColor),
             modifier = Modifier
@@ -226,7 +251,7 @@ fun CreateEditConsumableTab(
 @Preview
 @Composable
 fun CreateEditConsumableTabPreview() {
-  CreateEditConsumableTab()
+  CreateEditConsumableTab(navController = rememberNavController())
 }
 
 @ExperimentalPermissionsApi
@@ -234,6 +259,6 @@ fun CreateEditConsumableTabPreview() {
 @Composable
 fun CreateEditConsumableTabPreviewDark() {
   UglConsumablesTheme(darkTheme = true) {
-    CreateEditConsumableTab()
+    CreateEditConsumableTab(navController = rememberNavController())
   }
 }

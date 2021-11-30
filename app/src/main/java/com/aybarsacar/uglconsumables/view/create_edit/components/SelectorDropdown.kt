@@ -19,7 +19,7 @@ import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 @Composable
 fun MyDropdown(
   options: List<String>,
-  handleSelection: () -> Unit
+  handleSelection: (String) -> Unit
 ) {
   var expanded by remember { mutableStateOf(false) }
   var selectedText by remember { mutableStateOf("") }
@@ -55,7 +55,7 @@ fun MyDropdown(
       options.forEach { label ->
         DropdownMenuItem(onClick = {
           selectedText = label
-          handleSelection()
+          handleSelection(selectedText)
           expanded = false
         }) {
           Text(text = label)

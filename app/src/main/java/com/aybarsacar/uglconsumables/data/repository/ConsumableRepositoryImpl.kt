@@ -2,6 +2,7 @@ package com.aybarsacar.uglconsumables.data.repository
 
 import com.aybarsacar.uglconsumables.data.remote.UglConsumablesAppApi
 import com.aybarsacar.uglconsumables.data.remote.dto.ConsumableDto
+import com.aybarsacar.uglconsumables.data.remote.dto.ConsumableFormValues
 import com.aybarsacar.uglconsumables.domain.repository.ConsumableRepository
 import com.aybarsacar.uglconsumables.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -37,5 +38,26 @@ class ConsumableRepositoryImpl @Inject constructor(private val _api: UglConsumab
         )
       )
     }
+  }
+
+
+  override fun createConsumable(consumable: ConsumableFormValues): Flow<Resource<Unit>> = flow {
+
+    try {
+      emit(Resource.Loading<Unit>())
+
+      _api.createConsumable(consumableFormValues = consumable)
+
+      emit(Resource.Success<Unit>(Unit))
+
+    } catch (e: HttpException) {
+
+      emit(Resource.Error<Unit>(e.localizedMessage ?: "An unexpected error occurred"))
+
+    } catch (e: IOException) {
+
+      emit(Resource.Error<Unit>("Could not reach server. Check your internet connection"))
+    }
+
   }
 }
