@@ -22,7 +22,7 @@ class ConsumableRepositoryImpl @Inject constructor(private val _api: UglConsumab
 
     try {
 
-      val consumables = _api.getConsumables()
+      val consumables = _api.getConsumables(serviceOrderId)
 
       emit(Resource.Success<List<ConsumableDto>>(consumables))
 

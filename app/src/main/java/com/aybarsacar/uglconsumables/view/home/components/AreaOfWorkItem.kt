@@ -28,7 +28,7 @@ import com.aybarsacar.uglconsumables.ui.theme.taskItemTextColor
 @Composable
 fun AreaOfWorkItem(
   areaOfWork: AreaOfWorkDto,
-  navigateToConsumable: (consumableId: Int) -> Unit
+  navigateToServiceOrderConsumables: (serviceOrderId: Int) -> Unit
 ) {
 
   Surface(
@@ -40,7 +40,7 @@ fun AreaOfWorkItem(
     elevation = 2.dp,
     border = BorderStroke(1.dp, MaterialTheme.colors.itemBorderColor),
     onClick = {
-      navigateToConsumable(areaOfWork.id)
+      navigateToServiceOrderConsumables(areaOfWork.serviceOrder)
     }
   ) {
 
@@ -75,7 +75,7 @@ fun AreaOfWorkItem(
 fun AreaOfWorkItemPreview() {
   AreaOfWorkItem(
     areaOfWork = AreaOfWorkDto("Car Shop 1 Fabrication", 1, 60548),
-    navigateToConsumable = {}
+    navigateToServiceOrderConsumables = {}
   )
 }
 
@@ -86,7 +86,7 @@ fun AreaOfWorkItemPreviewDark() {
   UglConsumablesTheme(darkTheme = true) {
     AreaOfWorkItem(
       areaOfWork = AreaOfWorkDto("Car Shop 1 Fabrication", 1, 60548),
-      navigateToConsumable = {}
+      navigateToServiceOrderConsumables = {}
     )
   }
 }

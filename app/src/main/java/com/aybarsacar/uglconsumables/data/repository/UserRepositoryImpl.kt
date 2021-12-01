@@ -26,8 +26,23 @@ class UserRepositoryImpl @Inject constructor(private val _api: UglConsumablesApp
     return _api.getUserByEmail(email)
   }
 
-  override suspend fun getCurrentUser(): AccountDto {
-    return _api.getCurrentUser()
+  override fun getCurrentUser(token: String): Flow<Resource<AccountDto>> = flow {
+
+    try {
+      emit(Resource.Loading<AccountDto>())
+
+      val response = _api.getCurrentUser("Bearer $token")
+
+      emit(Resource.Success<AccountDto>(response))
+
+    } catch (e: HttpException) {
+
+      emit(Resource.Error<AccountDto>(e.localizedMessage ?: "AN unexpected error ocurred"))
+    } catch (e: IOException) {
+
+      emit(Resource.Error<AccountDto>("Could not reach server. Check your internet connection"))
+    }
+
   }
 
   override fun register(registerAccountDetails: RegisterAccountDetails): Flow<Resource<AccountDto>> = flow {

@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.aybarsacar.uglconsumables.navigation.Router
+import com.aybarsacar.uglconsumables.navigation.Screen
 import com.aybarsacar.uglconsumables.view.home.HomeViewModel
 import com.aybarsacar.uglconsumables.view.home.components.AreaOfWorkItem
 import com.aybarsacar.uglconsumables.view.home.components.EmptyContent
@@ -21,6 +23,7 @@ import com.aybarsacar.uglconsumables.view.home.components.Shimmer
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
+  externalRouter: Router,
   viewModel: HomeViewModel = hiltViewModel()
 ) {
   val state = viewModel.state.value
@@ -50,7 +53,9 @@ fun HomeScreen(
   ) {
 
     items(state.areaOfWorks) { areaOfWork ->
-      AreaOfWorkItem(areaOfWork = areaOfWork, navigateToConsumable = {})
+      AreaOfWorkItem(areaOfWork = areaOfWork, navigateToServiceOrderConsumables = {
+        externalRouter.navigateTo(Screen.NewOrderConsumableSelection.createRoute(it))
+      })
     }
   }
 }

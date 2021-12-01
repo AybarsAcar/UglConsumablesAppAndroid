@@ -16,7 +16,7 @@ interface UserRepository {
 
   suspend fun getUserByEmail(email: String): AccountDto
 
-  suspend fun getCurrentUser(): AccountDto
+  fun getCurrentUser(token: String): Flow<Resource<AccountDto>>
 
   fun register(registerAccountDetails: RegisterAccountDetails): Flow<Resource<AccountDto>>
 

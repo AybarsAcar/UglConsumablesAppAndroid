@@ -62,7 +62,7 @@ fun Home(
       NavHost(navController = navController, startDestination = NavigationItem.HomeScreen.route) {
 
         composable(route = NavigationItem.HomeScreen.route) {
-          HomeScreen()
+          HomeScreen(externalRouter = externalRouter)
         }
 
         composable(route = NavigationItem.ProfileScreen.route) {

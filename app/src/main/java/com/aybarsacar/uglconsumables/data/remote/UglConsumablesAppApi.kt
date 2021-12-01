@@ -16,10 +16,11 @@ interface UglConsumablesAppApi {
   suspend fun getUserByEmail(@Path("email") email: String): AccountDto
 
   /**
-   * returns the logged in user
+   * returns the currently logged in user
+   * make sure to pass the token as "Bearer $token"
    */
   @POST("Account")
-  suspend fun getCurrentUser(): AccountDto
+  suspend fun getCurrentUser(@Header("Authorization") token: String): AccountDto
 
   @POST("Account/register")
   suspend fun register(@Body registerAccountDetails: RegisterAccountDetails): AccountDto

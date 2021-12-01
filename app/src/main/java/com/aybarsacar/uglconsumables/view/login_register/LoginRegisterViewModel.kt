@@ -93,6 +93,14 @@ class LoginRegisterViewModel @Inject constructor(
   }
 
 
+  /**
+   * returns the currently logged in user
+   */
+  fun getCurrentUser() {
+
+  }
+
+
   fun logout() {
     _token = ""
     viewModelScope.launch {

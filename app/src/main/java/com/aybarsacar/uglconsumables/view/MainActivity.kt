@@ -14,6 +14,7 @@ import com.aybarsacar.uglconsumables.ui.theme.UglConsumablesTheme
 import com.aybarsacar.uglconsumables.view.create_edit.CreateEditPage
 import com.aybarsacar.uglconsumables.view.home.Home
 import com.aybarsacar.uglconsumables.view.login_register.LoginRegisterScreen
+import com.aybarsacar.uglconsumables.view.new_order.NewOrderScreen
 import com.aybarsacar.uglconsumables.view.order_details.OrderDetailedScreen
 import com.aybarsacar.uglconsumables.view.splash_screen.SplashScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -77,6 +78,17 @@ class MainActivity : ComponentActivity() {
               orderId = orderId.toInt(),
               navController = navController
             )
+          }
+
+          composable(route = Screen.NewOrderConsumableSelection.route) {
+
+            val serviceOrderId = it.arguments?.getString("serviceOrderId")
+
+            requireNotNull(serviceOrderId) {
+              "Order Id cannot be null to navigate to this screen"
+            }
+
+            NewOrderScreen(serviceOrderId = serviceOrderId.toInt())
           }
         }
       }
